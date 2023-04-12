@@ -1,0 +1,2 @@
+**Aufgabe:**
+Erstelle eine Amazon RDS Subnetzgruppe (engl. Subnet Group) mit dem Namen ``workshop-db-subnet-group``. Konfiguriere die Subnetzgruppe, sodass sie die beiden privaten Subnetze ``172.100.3.0/24`` und ``172.100.4.0/24`` aus den Availability Zonen ``us-east-1a`` und ``us-east-1b`` enthält.

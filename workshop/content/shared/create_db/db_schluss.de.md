@@ -1,0 +1,1 @@
+Herzlichen Glückwunsch! Du hast eine relationale Datenbank (Amazon RDS Instanz) erstellt, die als Speicher für die ToDos dienen wird. Die Instanz ist nicht öffentlich erreichbar und wurde im Workshop VPC gestartet. Durch die verknüpfte Security Group ``Workshop-RDS-SG`` kann die Datenbank lediglich von Ressourcen erreicht werden, die von der ``Workshop-ECS-SG`` aus kommen. 

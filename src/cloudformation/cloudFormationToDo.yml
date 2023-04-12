@@ -1,0 +1,1150 @@
+Parameters:
+  s3AssetBucketName:
+    Type: String
+  URIbackend:
+    Type: String
+  pwDatabase:
+    NoEcho: true
+    Type: String
+  userDatabase:
+    NoEcho: true
+    Type: String
+
+Resources:
+  ServerlessApiTodos5BF18BAA:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      KeySchema:
+        - AttributeName: user_id
+          KeyType: HASH
+        - AttributeName: id
+          KeyType: RANGE
+      AttributeDefinitions:
+        - AttributeName: user_id
+          AttributeType: S
+        - AttributeName: id
+          AttributeType: S
+      BillingMode: PAY_PER_REQUEST
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+    UpdateReplacePolicy: Retain
+    DeletionPolicy: Retain
+    
+      
+  ServerlessApiTodosApiHandler3B89CABA:
+    Type: AWS::Lambda::Function
+    Properties:
+      ReservedConcurrentExecutions: 10
+      Code:
+        S3Bucket: !Ref s3AssetBucketName
+        S3Key: lambda.zip
+      Role: !Sub 'arn:aws:iam::${AWS::AccountId}:role/LabRole'
+      Environment:
+        Variables:
+          TABLE:
+            Ref: ServerlessApiTodos5BF18BAA
+      Handler: lambda/index.handler
+      Runtime: nodejs18.x
+
+  ServerlessApiTodoApiBE35F21F:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Name: TODOs API
+  
+  ServerlessApiTodoApiAccountB015930A:
+    Type: AWS::ApiGateway::Account
+    Properties:
+      CloudWatchRoleArn: !Sub 'arn:aws:iam::${AWS::AccountId}:role/LabRole'
+    DependsOn:
+      - ServerlessApiTodoApiBE35F21F
+    UpdateReplacePolicy: Retain
+    DeletionPolicy: Retain
+
+  ServerlessApiTodoApiDeployment204AFD9C58be618b959413b7999630a5103d328c:
+    Type: AWS::ApiGateway::Deployment
+    Properties:
+      RestApiId:
+        Ref: ServerlessApiTodoApiBE35F21F
+      Description: Automatically created by the RestApi construct
+    DependsOn:
+      - ServerlessApiTodoApiv2906F6143
+      - ServerlessApiTodoApiv2todostodoDELETEB063A63E
+      - ServerlessApiTodoApiv2todostodoPUTE7C67BC9
+      - ServerlessApiTodoApiv2todostodoD3C5DB1C
+      - ServerlessApiTodoApiv2todosGETEE3E2B0E
+      - ServerlessApiTodoApiv2todosPOST3E2F2AB6
+      - ServerlessApiTodoApiv2todosBFC16DEE
+
+  ServerlessApiTodoApiDeploymentStageapi853B3770:
+    Type: AWS::ApiGateway::Stage
+    Properties:
+      RestApiId:
+        Ref: ServerlessApiTodoApiBE35F21F
+      DeploymentId:
+        Ref: ServerlessApiTodoApiDeployment204AFD9C58be618b959413b7999630a5103d328c
+      StageName: api
+    DependsOn:
+      - ServerlessApiTodoApiAccountB015930A
+    Metadata:
+      aws:cdk:path: TodoStack/ServerlessApi/TodoApi/DeploymentStage.api/Resource
+
+  ServerlessApiTodoApiv2906F6143:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      ParentId:
+        Fn::GetAtt:
+          - ServerlessApiTodoApiBE35F21F
+          - RootResourceId
+      PathPart: v2
+      RestApiId:
+        Ref: ServerlessApiTodoApiBE35F21F
+
+  ServerlessApiTodoApiv2todosBFC16DEE:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      ParentId:
+        Ref: ServerlessApiTodoApiv2906F6143
+      PathPart: todos
+      RestApiId:
+        Ref: ServerlessApiTodoApiBE35F21F
+
+  ServerlessApiTodoApiv2todosGETApiPermissionTodoStackServerlessApiTodoApiD3A9F6F2GETv2todos73BD8BE5:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName:
+        Fn::GetAtt:
+          - ServerlessApiTodosApiHandler3B89CABA
+          - Arn
+      Principal: apigateway.amazonaws.com
+      SourceArn:
+        Fn::Join:
+          - ""
+          - - "arn:"
+            - Ref: AWS::Partition
+            - ":execute-api:"
+            - Ref: AWS::Region
+            - ":"
+            - Ref: AWS::AccountId
+            - ":"
+            - Ref: ServerlessApiTodoApiBE35F21F
+            - /
+            - Ref: ServerlessApiTodoApiDeploymentStageapi853B3770
+            - /GET/v2/todos
+
+  ServerlessApiTodoApiv2todosGETApiPermissionTestTodoStackServerlessApiTodoApiD3A9F6F2GETv2todos34912E07:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName:
+        Fn::GetAtt:
+          - ServerlessApiTodosApiHandler3B89CABA
+          - Arn
+      Principal: apigateway.amazonaws.com
+      SourceArn:
+        Fn::Join:
+          - ""
+          - - "arn:"
+            - Ref: AWS::Partition
+            - ":execute-api:"
+            - Ref: AWS::Region
+            - ":"
+            - Ref: AWS::AccountId
+            - ":"
+            - Ref: ServerlessApiTodoApiBE35F21F
+            - /test-invoke-stage/GET/v2/todos
+
+  ServerlessApiTodoApiv2todosGETEE3E2B0E:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      HttpMethod: GET
+      ResourceId:
+        Ref: ServerlessApiTodoApiv2todosBFC16DEE
+      RestApiId:
+        Ref: ServerlessApiTodoApiBE35F21F
+      AuthorizationType: NONE
+      Integration:
+        IntegrationHttpMethod: POST
+        Type: AWS_PROXY
+        Uri:
+          Fn::Join:
+            - ""
+            - - "arn:"
+              - Ref: AWS::Partition
+              - ":apigateway:"
+              - Ref: AWS::Region
+              - :lambda:path/2015-03-31/functions/
+              - Fn::GetAtt:
+                  - ServerlessApiTodosApiHandler3B89CABA
+                  - Arn
+              - /invocations
+    Metadata:
+      aws:cdk:path: TodoStack/ServerlessApi/TodoApi/Default/v2/todos/GET/Resource
+  
+  ServerlessApiTodoApiv2todosPOSTApiPermissionTodoStackServerlessApiTodoApiD3A9F6F2POSTv2todos9BFBF38D:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName:
+        Fn::GetAtt:
+          - ServerlessApiTodosApiHandler3B89CABA
+          - Arn
+      Principal: apigateway.amazonaws.com
+      SourceArn:
+        Fn::Join:
+          - ""
+          - - "arn:"
+            - Ref: AWS::Partition
+            - ":execute-api:"
+            - Ref: AWS::Region
+            - ":"
+            - Ref: AWS::AccountId
+            - ":"
+            - Ref: ServerlessApiTodoApiBE35F21F
+            - /
+            - Ref: ServerlessApiTodoApiDeploymentStageapi853B3770
+            - /POST/v2/todos
+
+  ServerlessApiTodoApiv2todosPOSTApiPermissionTestTodoStackServerlessApiTodoApiD3A9F6F2POSTv2todosF075EA77:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName:
+        Fn::GetAtt:
+          - ServerlessApiTodosApiHandler3B89CABA
+          - Arn
+      Principal: apigateway.amazonaws.com
+      SourceArn:
+        Fn::Join:
+          - ""
+          - - "arn:"
+            - Ref: AWS::Partition
+            - ":execute-api:"
+            - Ref: AWS::Region
+            - ":"
+            - Ref: AWS::AccountId
+            - ":"
+            - Ref: ServerlessApiTodoApiBE35F21F
+            - /test-invoke-stage/POST/v2/todos
+    Metadata:
+      aws:cdk:path: TodoStack/ServerlessApi/TodoApi/Default/v2/todos/POST/ApiPermission.Test.TodoStackServerlessApiTodoApiD3A9F6F2.POST..v2.todos
+  
+  ServerlessApiTodoApiv2todosPOST3E2F2AB6:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      HttpMethod: POST
+      ResourceId:
+        Ref: ServerlessApiTodoApiv2todosBFC16DEE
+      RestApiId:
+        Ref: ServerlessApiTodoApiBE35F21F
+      AuthorizationType: NONE
+      Integration:
+        IntegrationHttpMethod: POST
+        Type: AWS_PROXY
+        Uri:
+          Fn::Join:
+            - ""
+            - - "arn:"
+              - Ref: AWS::Partition
+              - ":apigateway:"
+              - Ref: AWS::Region
+              - :lambda:path/2015-03-31/functions/
+              - Fn::GetAtt:
+                  - ServerlessApiTodosApiHandler3B89CABA
+                  - Arn
+              - /invocations
+    Metadata:
+      aws:cdk:path: TodoStack/ServerlessApi/TodoApi/Default/v2/todos/POST/Resource
+  
+  ServerlessApiTodoApiv2todostodoD3C5DB1C:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      ParentId:
+        Ref: ServerlessApiTodoApiv2todosBFC16DEE
+      PathPart: "{todo+}"
+      RestApiId:
+        Ref: ServerlessApiTodoApiBE35F21F
+    Metadata:
+      aws:cdk:path: TodoStack/ServerlessApi/TodoApi/Default/v2/todos/{todo+}/Resource
+  
+  ServerlessApiTodoApiv2todostodoDELETEApiPermissionTodoStackServerlessApiTodoApiD3A9F6F2DELETEv2todostodoEECAB461:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName:
+        Fn::GetAtt:
+          - ServerlessApiTodosApiHandler3B89CABA
+          - Arn
+      Principal: apigateway.amazonaws.com
+      SourceArn:
+        Fn::Join:
+          - ""
+          - - "arn:"
+            - Ref: AWS::Partition
+            - ":execute-api:"
+            - Ref: AWS::Region
+            - ":"
+            - Ref: AWS::AccountId
+            - ":"
+            - Ref: ServerlessApiTodoApiBE35F21F
+            - /
+            - Ref: ServerlessApiTodoApiDeploymentStageapi853B3770
+            - /DELETE/v2/todos/*
+    Metadata:
+      aws:cdk:path: TodoStack/ServerlessApi/TodoApi/Default/v2/todos/{todo+}/DELETE/ApiPermission.TodoStackServerlessApiTodoApiD3A9F6F2.DELETE..v2.todos.{todo+}
+  
+  ServerlessApiTodoApiv2todostodoDELETEApiPermissionTestTodoStackServerlessApiTodoApiD3A9F6F2DELETEv2todostodo5DA86E50:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName:
+        Fn::GetAtt:
+          - ServerlessApiTodosApiHandler3B89CABA
+          - Arn
+      Principal: apigateway.amazonaws.com
+      SourceArn:
+        Fn::Join:
+          - ""
+          - - "arn:"
+            - Ref: AWS::Partition
+            - ":execute-api:"
+            - Ref: AWS::Region
+            - ":"
+            - Ref: AWS::AccountId
+            - ":"
+            - Ref: ServerlessApiTodoApiBE35F21F
+            - /test-invoke-stage/DELETE/v2/todos/*
+    Metadata:
+      aws:cdk:path: TodoStack/ServerlessApi/TodoApi/Default/v2/todos/{todo+}/DELETE/ApiPermission.Test.TodoStackServerlessApiTodoApiD3A9F6F2.DELETE..v2.todos.{todo+}
+  
+  ServerlessApiTodoApiv2todostodoDELETEB063A63E:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      HttpMethod: DELETE
+      ResourceId:
+        Ref: ServerlessApiTodoApiv2todostodoD3C5DB1C
+      RestApiId:
+        Ref: ServerlessApiTodoApiBE35F21F
+      AuthorizationType: NONE
+      Integration:
+        IntegrationHttpMethod: POST
+        Type: AWS_PROXY
+        Uri:
+          Fn::Join:
+            - ""
+            - - "arn:"
+              - Ref: AWS::Partition
+              - ":apigateway:"
+              - Ref: AWS::Region
+              - :lambda:path/2015-03-31/functions/
+              - Fn::GetAtt:
+                  - ServerlessApiTodosApiHandler3B89CABA
+                  - Arn
+              - /invocations
+    Metadata:
+      aws:cdk:path: TodoStack/ServerlessApi/TodoApi/Default/v2/todos/{todo+}/DELETE/Resource
+  
+  ServerlessApiTodoApiv2todostodoPUTApiPermissionTodoStackServerlessApiTodoApiD3A9F6F2PUTv2todostodo123ED17A:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName:
+        Fn::GetAtt:
+          - ServerlessApiTodosApiHandler3B89CABA
+          - Arn
+      Principal: apigateway.amazonaws.com
+      SourceArn:
+        Fn::Join:
+          - ""
+          - - "arn:"
+            - Ref: AWS::Partition
+            - ":execute-api:"
+            - Ref: AWS::Region
+            - ":"
+            - Ref: AWS::AccountId
+            - ":"
+            - Ref: ServerlessApiTodoApiBE35F21F
+            - /
+            - Ref: ServerlessApiTodoApiDeploymentStageapi853B3770
+            - /PUT/v2/todos/*
+    Metadata:
+      aws:cdk:path: TodoStack/ServerlessApi/TodoApi/Default/v2/todos/{todo+}/PUT/ApiPermission.TodoStackServerlessApiTodoApiD3A9F6F2.PUT..v2.todos.{todo+}
+  
+  ServerlessApiTodoApiv2todostodoPUTApiPermissionTestTodoStackServerlessApiTodoApiD3A9F6F2PUTv2todostodo4A1F98D6:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName:
+        Fn::GetAtt:
+          - ServerlessApiTodosApiHandler3B89CABA
+          - Arn
+      Principal: apigateway.amazonaws.com
+      SourceArn:
+        Fn::Join:
+          - ""
+          - - "arn:"
+            - Ref: AWS::Partition
+            - ":execute-api:"
+            - Ref: AWS::Region
+            - ":"
+            - Ref: AWS::AccountId
+            - ":"
+            - Ref: ServerlessApiTodoApiBE35F21F
+            - /test-invoke-stage/PUT/v2/todos/*
+    Metadata:
+      aws:cdk:path: TodoStack/ServerlessApi/TodoApi/Default/v2/todos/{todo+}/PUT/ApiPermission.Test.TodoStackServerlessApiTodoApiD3A9F6F2.PUT..v2.todos.{todo+}
+  
+  ServerlessApiTodoApiv2todostodoPUTE7C67BC9:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      HttpMethod: PUT
+      ResourceId:
+        Ref: ServerlessApiTodoApiv2todostodoD3C5DB1C
+      RestApiId:
+        Ref: ServerlessApiTodoApiBE35F21F
+      AuthorizationType: NONE
+      Integration:
+        IntegrationHttpMethod: POST
+        Type: AWS_PROXY
+        Uri:
+          Fn::Join:
+            - ""
+            - - "arn:"
+              - Ref: AWS::Partition
+              - ":apigateway:"
+              - Ref: AWS::Region
+              - :lambda:path/2015-03-31/functions/
+              - Fn::GetAtt:
+                  - ServerlessApiTodosApiHandler3B89CABA
+                  - Arn
+              - /invocations
+    Metadata:
+      aws:cdk:path: TodoStack/ServerlessApi/TodoApi/Default/v2/todos/{todo+}/PUT/Resource
+  
+  ContainerApiVpc0CDF3B5D:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsHostnames: true
+      EnableDnsSupport: true
+      InstanceTenancy: default
+      Tags:
+        - Key: Name
+          Value: TodoStack/ContainerApi/Vpc
+  
+  ContainerApiVpcPublicSubnet1Subnet1B34C9A7:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId:
+        Ref: ContainerApiVpc0CDF3B5D
+      AvailabilityZone:
+        Fn::Select:
+          - 0
+          - Fn::GetAZs: ""
+      CidrBlock: 10.0.0.0/18
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: aws-cdk:subnet-name
+          Value: Public
+        - Key: aws-cdk:subnet-type
+          Value: Public
+        - Key: Name
+          Value: TodoStack/ContainerApi/Vpc/PublicSubnet1
+
+  ContainerApiVpcPublicSubnet1RouteTable8390FA8A:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        Ref: ContainerApiVpc0CDF3B5D
+      Tags:
+        - Key: Name
+          Value: TodoStack/ContainerApi/Vpc/PublicSubnet1
+
+  ContainerApiVpcPublicSubnet1RouteTableAssociationE8BB15B0:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: ContainerApiVpcPublicSubnet1RouteTable8390FA8A
+      SubnetId:
+        Ref: ContainerApiVpcPublicSubnet1Subnet1B34C9A7
+
+  ContainerApiVpcIGWD34D1DB2:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+        - Key: Name
+          Value: TodoStack/ContainerApi/Vpc
+
+  ContainerApiVpcVPCGW45E16A28:
+      Type: AWS::EC2::VPCGatewayAttachment
+      Properties:
+        VpcId:
+          Ref: ContainerApiVpc0CDF3B5D
+        InternetGatewayId:
+          Ref: ContainerApiVpcIGWD34D1DB2
+
+  ContainerApiVpcPublicSubnet1DefaultRouteDA8FE575:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId:
+        Ref: ContainerApiVpcPublicSubnet1RouteTable8390FA8A
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId:
+        Ref: ContainerApiVpcIGWD34D1DB2
+    DependsOn:
+      - ContainerApiVpcVPCGW45E16A28
+  
+  ContainerApiVpcPublicSubnet1EIP9DB01759:
+    Type: AWS::EC2::EIP
+    Properties:
+      Domain: vpc
+      Tags:
+        - Key: Name
+          Value: TodoStack/ContainerApi/Vpc/PublicSubnet1
+    Metadata:
+      aws:cdk:path: TodoStack/ContainerApi/Vpc/PublicSubnet1/EIP
+  
+  ContainerApiVpcPublicSubnet1NATGateway2878A15A:
+    Type: AWS::EC2::NatGateway
+    Properties:
+      SubnetId:
+        Ref: ContainerApiVpcPublicSubnet1Subnet1B34C9A7
+      AllocationId:
+        Fn::GetAtt:
+          - ContainerApiVpcPublicSubnet1EIP9DB01759
+          - AllocationId
+      Tags:
+        - Key: Name
+          Value: TodoStack/ContainerApi/Vpc/PublicSubnet1
+    DependsOn:
+      - ContainerApiVpcPublicSubnet1DefaultRouteDA8FE575
+      - ContainerApiVpcPublicSubnet1RouteTableAssociationE8BB15B0
+  
+  ContainerApiVpcPublicSubnet2SubnetEF653A94:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId:
+        Ref: ContainerApiVpc0CDF3B5D
+      AvailabilityZone:
+        Fn::Select:
+          - 1
+          - Fn::GetAZs: ""
+      CidrBlock: 10.0.64.0/18
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: aws-cdk:subnet-name
+          Value: Public
+        - Key: aws-cdk:subnet-type
+          Value: Public
+        - Key: Name
+          Value: TodoStack/ContainerApi/Vpc/PublicSubnet2
+          
+  ContainerApiVpcPublicSubnet2RouteTable94F4A9C4:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        Ref: ContainerApiVpc0CDF3B5D
+      Tags:
+        - Key: Name
+          Value: TodoStack/ContainerApi/Vpc/PublicSubnet2
+
+  ContainerApiVpcPublicSubnet2RouteTableAssociation53D4FB02:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: ContainerApiVpcPublicSubnet2RouteTable94F4A9C4
+      SubnetId:
+        Ref: ContainerApiVpcPublicSubnet2SubnetEF653A94
+
+  ContainerApiVpcPublicSubnet2DefaultRoute3BB29F52:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId:
+        Ref: ContainerApiVpcPublicSubnet2RouteTable94F4A9C4
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId:
+        Ref: ContainerApiVpcIGWD34D1DB2
+    DependsOn:
+      - ContainerApiVpcVPCGW45E16A28
+
+  ContainerApiVpcPublicSubnet2EIPBF3EF85C:
+    Type: AWS::EC2::EIP
+    Properties:
+      Domain: vpc
+      Tags:
+        - Key: Name
+          Value: TodoStack/ContainerApi/Vpc/PublicSubnet2
+
+  ContainerApiVpcPublicSubnet2NATGatewayFCF48EF6:
+    Type: AWS::EC2::NatGateway
+    Properties:
+      SubnetId:
+        Ref: ContainerApiVpcPublicSubnet2SubnetEF653A94
+      AllocationId:
+        Fn::GetAtt:
+          - ContainerApiVpcPublicSubnet2EIPBF3EF85C
+          - AllocationId
+      Tags:
+        - Key: Name
+          Value: TodoStack/ContainerApi/Vpc/PublicSubnet2
+    DependsOn:
+      - ContainerApiVpcPublicSubnet2DefaultRoute3BB29F52
+      - ContainerApiVpcPublicSubnet2RouteTableAssociation53D4FB02
+
+  ContainerApiVpcPrivateSubnet1SubnetA5FC0E95:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId:
+        Ref: ContainerApiVpc0CDF3B5D
+      AvailabilityZone:
+        Fn::Select:
+          - 0
+          - Fn::GetAZs: ""
+      CidrBlock: 10.0.128.0/18
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: aws-cdk:subnet-name
+          Value: Private
+        - Key: aws-cdk:subnet-type
+          Value: Private
+        - Key: Name
+          Value: TodoStack/ContainerApi/Vpc/PrivateSubnet1
+
+  ContainerApiVpcPrivateSubnet1RouteTableDDC3A2A2:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        Ref: ContainerApiVpc0CDF3B5D
+      Tags:
+        - Key: Name
+          Value: TodoStack/ContainerApi/Vpc/PrivateSubnet1
+
+  ContainerApiVpcPrivateSubnet1RouteTableAssociation3C881636:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: ContainerApiVpcPrivateSubnet1RouteTableDDC3A2A2
+      SubnetId:
+        Ref: ContainerApiVpcPrivateSubnet1SubnetA5FC0E95
+
+  ContainerApiVpcPrivateSubnet1DefaultRoute1A5C34E9:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId:
+        Ref: ContainerApiVpcPrivateSubnet1RouteTableDDC3A2A2
+      DestinationCidrBlock: 0.0.0.0/0
+      NatGatewayId:
+        Ref: ContainerApiVpcPublicSubnet1NATGateway2878A15A
+
+  ContainerApiVpcPrivateSubnet2Subnet2E039BAC:
+      Type: AWS::EC2::Subnet
+      Properties:
+        VpcId:
+          Ref: ContainerApiVpc0CDF3B5D
+        AvailabilityZone:
+          Fn::Select:
+            - 1
+            - Fn::GetAZs: ""
+        CidrBlock: 10.0.192.0/18
+        MapPublicIpOnLaunch: false
+        Tags:
+          - Key: aws-cdk:subnet-name
+            Value: Private
+          - Key: aws-cdk:subnet-type
+            Value: Private
+          - Key: Name
+            Value: TodoStack/ContainerApi/Vpc/PrivateSubnet2
+ 
+  ContainerApiVpcPrivateSubnet2RouteTableCAEDFB8D:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        Ref: ContainerApiVpc0CDF3B5D
+      Tags:
+        - Key: Name
+          Value: TodoStack/ContainerApi/Vpc/PrivateSubnet2
+
+  ContainerApiVpcPrivateSubnet2RouteTableAssociation1FDD5E03:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: ContainerApiVpcPrivateSubnet2RouteTableCAEDFB8D
+      SubnetId:
+        Ref: ContainerApiVpcPrivateSubnet2Subnet2E039BAC
+
+  ContainerApiVpcPrivateSubnet2DefaultRoute58E45938:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId:
+        Ref: ContainerApiVpcPrivateSubnet2RouteTableCAEDFB8D
+      DestinationCidrBlock: 0.0.0.0/0
+      NatGatewayId:
+        Ref: ContainerApiVpcPublicSubnet2NATGatewayFCF48EF6
+
+  ContainerApiDatabaseSubnets9D4939F7:
+      Type: AWS::RDS::DBSubnetGroup
+      Properties:
+        DBSubnetGroupDescription: Subnets for Database database
+        SubnetIds:
+          - Ref: ContainerApiVpcPrivateSubnet1SubnetA5FC0E95
+          - Ref: ContainerApiVpcPrivateSubnet2Subnet2E039BAC
+      Metadata:
+        aws:cdk:path: TodoStack/ContainerApi/Database/Subnets/Default
+    
+  ContainerApiDatabaseSecurityGroup7130EA53:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: RDS security group
+      SecurityGroupEgress:
+        - CidrIp: 0.0.0.0/0
+          Description: Allow all outbound traffic by default
+          IpProtocol: "-1"
+      VpcId:
+        Ref: ContainerApiVpc0CDF3B5D
+    Metadata:
+      aws:cdk:path: TodoStack/ContainerApi/Database/SecurityGroup/Resource
+    
+  ContainerApiDatabaseSecurityGroupfromTodoStackContainerApiTodoApiServiceSecurityGroupD92B3D223306442BC63B:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      IpProtocol: tcp
+      Description: from TodoStackContainerApiTodoApiServiceSecurityGroupD92B3D22:3306
+      FromPort: 3306
+      GroupId:
+        Fn::GetAtt:
+          - ContainerApiDatabaseSecurityGroup7130EA53
+          - GroupId
+      SourceSecurityGroupId:
+        Fn::GetAtt:
+          - ContainerApiTodoApiServiceSecurityGroupF71DDD0C
+          - GroupId
+      ToPort: 3306
+    Metadata:
+      aws:cdk:path: TodoStack/ContainerApi/Database/SecurityGroup/from TodoStackContainerApiTodoApiServiceSecurityGroupD92B3D22:3306
+  
+  ContainerApiDatabaseAF669B52:
+    Type: AWS::RDS::DBCluster
+    Properties:
+      BackupRetentionPeriod: 1
+      StorageEncrypted: true
+      Engine: aurora-mysql
+      CopyTagsToSnapshot: true
+      DatabaseName: todo
+      DBClusterParameterGroupName: default.aurora-mysql5.7
+      DBSubnetGroupName:
+        Ref: ContainerApiDatabaseSubnets9D4939F7
+      EngineVersion: 5.7.mysql_aurora.2.10.1
+      MasterUsername: !Ref userDatabase
+      MasterUserPassword: !Ref pwDatabase
+      VpcSecurityGroupIds:
+        - Fn::GetAtt:
+            - ContainerApiDatabaseSecurityGroup7130EA53
+            - GroupId
+    UpdateReplacePolicy: Snapshot
+    DeletionPolicy: Snapshot
+    Metadata:
+      aws:cdk:path: TodoStack/ContainerApi/Database/Resource
+  
+  ContainerApiDatabaseInstance1FBC3CCAE:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      AutoMinorVersionUpgrade: true
+      DBClusterIdentifier:
+        Ref: ContainerApiDatabaseAF669B52
+      DBInstanceClass: db.t3.small
+      DBSubnetGroupName:
+        Ref: ContainerApiDatabaseSubnets9D4939F7
+      Engine: aurora-mysql
+      PubliclyAccessible: false
+    DependsOn:
+      - ContainerApiVpcPrivateSubnet1DefaultRoute1A5C34E9
+      - ContainerApiVpcPrivateSubnet1RouteTableAssociation3C881636
+      - ContainerApiVpcPrivateSubnet2DefaultRoute58E45938
+      - ContainerApiVpcPrivateSubnet2RouteTableAssociation1FDD5E03
+    UpdateReplacePolicy: Delete
+    DeletionPolicy: Delete
+    Metadata:
+      aws:cdk:path: TodoStack/ContainerApi/Database/Instance1
+  
+  ContainerApiDatabaseInstance2A70070A5:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      AutoMinorVersionUpgrade: true
+      PubliclyAccessible: false
+      DBClusterIdentifier:
+        Ref: ContainerApiDatabaseAF669B52
+      DBInstanceClass: db.t3.small
+      DBSubnetGroupName:
+        Ref: ContainerApiDatabaseSubnets9D4939F7
+      Engine: aurora-mysql
+    DependsOn:
+      - ContainerApiVpcPrivateSubnet1DefaultRoute1A5C34E9
+      - ContainerApiVpcPrivateSubnet1RouteTableAssociation3C881636
+      - ContainerApiVpcPrivateSubnet2DefaultRoute58E45938
+      - ContainerApiVpcPrivateSubnet2RouteTableAssociation1FDD5E03
+    UpdateReplacePolicy: Delete
+    DeletionPolicy: Delete
+    Metadata:
+      aws:cdk:path: TodoStack/ContainerApi/Database/Instance2
+
+  ContainerApiTodoApiServiceLB3EB89DD0:
+      Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+      Properties:
+        LoadBalancerAttributes:
+          - Key: deletion_protection.enabled
+            Value: "false"
+        Scheme: internet-facing
+        SecurityGroups:
+          - Fn::GetAtt:
+              - ContainerApiTodoApiServiceLBSecurityGroup056C7326
+              - GroupId
+        Subnets:
+          - Ref: ContainerApiVpcPublicSubnet1Subnet1B34C9A7
+          - Ref: ContainerApiVpcPublicSubnet2SubnetEF653A94
+        Type: application
+      DependsOn:
+        - ContainerApiVpcPublicSubnet1DefaultRouteDA8FE575
+        - ContainerApiVpcPublicSubnet1RouteTableAssociationE8BB15B0
+        - ContainerApiVpcPublicSubnet2DefaultRoute3BB29F52
+        - ContainerApiVpcPublicSubnet2RouteTableAssociation53D4FB02
+      Metadata:
+        aws:cdk:path: TodoStack/ContainerApi/TodoApiService/LB/Resource
+    
+  ContainerApiTodoApiServiceLBSecurityGroup056C7326:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Automatically created Security Group for ELB TodoStackContainerApiTodoApiServiceLBD2F92030
+      SecurityGroupIngress:
+        - CidrIp: 0.0.0.0/0
+          Description: Allow from anyone on port 80
+          FromPort: 80
+          IpProtocol: tcp
+          ToPort: 80
+      VpcId:
+        Ref: ContainerApiVpc0CDF3B5D
+    Metadata:
+      aws:cdk:path: TodoStack/ContainerApi/TodoApiService/LB/SecurityGroup/Resource
+  
+  ContainerApiTodoApiServiceLBSecurityGrouptoTodoStackContainerApiTodoApiServiceSecurityGroupD92B3D2250003AB70A7B:
+    Type: AWS::EC2::SecurityGroupEgress
+    Properties:
+      GroupId:
+        Fn::GetAtt:
+          - ContainerApiTodoApiServiceLBSecurityGroup056C7326
+          - GroupId
+      IpProtocol: tcp
+      Description: Load balancer to target
+      DestinationSecurityGroupId:
+        Fn::GetAtt:
+          - ContainerApiTodoApiServiceSecurityGroupF71DDD0C
+          - GroupId
+      FromPort: 5000
+      ToPort: 5000
+    Metadata:
+      aws:cdk:path: TodoStack/ContainerApi/TodoApiService/LB/SecurityGroup/to TodoStackContainerApiTodoApiServiceSecurityGroupD92B3D22:5000
+  
+  ContainerApiTodoApiServiceLBPublicListener3CB4BEA3:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      DefaultActions:
+        - TargetGroupArn:
+            Ref: ContainerApiTodoApiServiceLBPublicListenerECSGroupA4AC45C1
+          Type: forward
+      LoadBalancerArn:
+        Ref: ContainerApiTodoApiServiceLB3EB89DD0
+      Port: 80
+      Protocol: HTTP
+    Metadata:
+      aws:cdk:path: TodoStack/ContainerApi/TodoApiService/LB/PublicListener/Resource
+  
+  ContainerApiTodoApiServiceLBPublicListenerECSGroupA4AC45C1:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      Port: 80
+      Protocol: HTTP
+      TargetGroupAttributes:
+        - Key: stickiness.enabled
+          Value: "false"
+      TargetType: ip
+      VpcId:
+        Ref: ContainerApiVpc0CDF3B5D
+    Metadata:
+      aws:cdk:path: TodoStack/ContainerApi/TodoApiService/LB/PublicListener/ECSGroup/Resource
+
+
+  ContainerApiTodoApiServiceSecurityGroupF71DDD0C:
+      Type: AWS::EC2::SecurityGroup
+      Properties:
+        GroupDescription: TodoStack/ContainerApi/TodoApiService/Service/SecurityGroup
+        SecurityGroupEgress:
+          - CidrIp: 0.0.0.0/0
+            Description: Allow all outbound traffic by default
+            IpProtocol: "-1"
+        VpcId:
+          Ref: ContainerApiVpc0CDF3B5D
+      Metadata:
+        aws:cdk:path: TodoStack/ContainerApi/TodoApiService/Service/SecurityGroup/Resource
+
+  ContainerApiTodoApiServiceTaskDefAB112C0D:
+      Type: AWS::ECS::TaskDefinition
+      Properties:
+        ContainerDefinitions:
+          - Environment:
+              - Name: DB_HOST
+                Value:
+                  Fn::GetAtt:
+                    - ContainerApiDatabaseAF669B52
+                    - Endpoint.Address
+              - Name: DB_USER
+                Value: !Ref userDatabase
+              - Name: DB_PASSWORD
+                Value: !Ref pwDatabase
+            Essential: true
+            Image: !Ref URIbackend
+            LogConfiguration:
+              LogDriver: awslogs
+              Options:
+                awslogs-group:
+                  Ref: ContainerApiTodoApiServiceTaskDefcontainerbackendLogGroupF432C791
+                awslogs-stream-prefix: TodoApiService
+                awslogs-region:
+                  Ref: AWS::Region
+            Name: container-backend
+            PortMappings:
+              - ContainerPort: 5000
+                Protocol: tcp
+        Cpu: "256"
+        ExecutionRoleArn: !Sub 'arn:aws:iam::${AWS::AccountId}:role/LabRole'
+        Family: TodoStackContainerApiTodoApiServiceTaskDef56AF7FAD
+        Memory: "512"
+        NetworkMode: awsvpc
+        RequiresCompatibilities:
+          - FARGATE
+        TaskRoleArn: !Sub 'arn:aws:iam::${AWS::AccountId}:role/LabRole'
+    
+  ContainerApiTodoApiServiceTaskDefcontainerbackendLogGroupF432C791:
+    Type: AWS::Logs::LogGroup
+    UpdateReplacePolicy: Retain
+    DeletionPolicy: Retain
+    Properties:
+      RetentionInDays: 1
+    Metadata:
+      aws:cdk:path: TodoStack/ContainerApi/TodoApiService/TaskDef/container-backend/LogGroup/Resource
+
+  ContainerApiTodoApiServiceE116BFBD:
+      Type: AWS::ECS::Service
+      Properties:
+        Cluster:
+          Ref: EcsDefaultClusterMnL3mNNYNVpc18E0451A
+        DeploymentConfiguration:
+          MaximumPercent: 200
+          MinimumHealthyPercent: 50
+        EnableECSManagedTags: false
+        HealthCheckGracePeriodSeconds: 60
+        LaunchType: FARGATE
+        LoadBalancers:
+          - ContainerName: container-backend
+            ContainerPort: 5000
+            TargetGroupArn:
+              Ref: ContainerApiTodoApiServiceLBPublicListenerECSGroupA4AC45C1
+        NetworkConfiguration:
+          AwsvpcConfiguration:
+            AssignPublicIp: DISABLED
+            SecurityGroups:
+              - Fn::GetAtt:
+                  - ContainerApiTodoApiServiceSecurityGroupF71DDD0C
+                  - GroupId
+            Subnets:
+              - Ref: ContainerApiVpcPrivateSubnet1SubnetA5FC0E95
+              - Ref: ContainerApiVpcPrivateSubnet2Subnet2E039BAC
+        TaskDefinition:
+          Ref: ContainerApiTodoApiServiceTaskDefAB112C0D
+      DependsOn:
+        - ContainerApiTodoApiServiceLBPublicListener3CB4BEA3
+      Metadata:
+        aws:cdk:path: TodoStack/ContainerApi/TodoApiService/Service/Service
+    
+  ContainerApiTodoApiServiceSecurityGroupfromTodoStackContainerApiTodoApiServiceLBSecurityGroup6E1274F750003A5BE329:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      IpProtocol: tcp
+      Description: Load balancer to target
+      FromPort: 5000
+      GroupId:
+        Fn::GetAtt:
+          - ContainerApiTodoApiServiceSecurityGroupF71DDD0C
+          - GroupId
+      SourceSecurityGroupId:
+        Fn::GetAtt:
+          - ContainerApiTodoApiServiceLBSecurityGroup056C7326
+          - GroupId
+      ToPort: 5000
+    Metadata:
+      aws:cdk:path: TodoStack/ContainerApi/TodoApiService/Service/SecurityGroup/from TodoStackContainerApiTodoApiServiceLBSecurityGroup6E1274F7:5000
+  
+  EcsDefaultClusterMnL3mNNYNVpc18E0451A:
+    Type: AWS::ECS::Cluster
+    Metadata:
+      aws:cdk:path: TodoStack/EcsDefaultClusterMnL3mNNYNVpc/Resource
+      
+  StaticWebsiteWebsiteBucket0FD1C291:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketEncryption: 
+        ServerSideEncryptionConfiguration: 
+          - ServerSideEncryptionByDefault: 
+              SSEAlgorithm: 'AES256'
+      LoggingConfiguration:
+        LogFilePrefix: "StaticWebsiteBucket"
+      PublicAccessBlockConfiguration:
+          BlockPublicAcls: true
+          BlockPublicPolicy: true
+          IgnorePublicAcls: true
+          RestrictPublicBuckets: true
+      VersioningConfiguration:
+        Status: Enabled
+      Tags:
+        - Key: aws-cdk:cr-owned:e3d63c7b
+          Value: "true"
+    UpdateReplacePolicy: Retain
+    DeletionPolicy: Retain
+    Metadata:
+      aws:cdk:path: TodoStack/StaticWebsite/WebsiteBucket/Resource
+
+
+  StaticWebsiteWebsiteBucketPolicy8C735E20:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket:
+          Ref: StaticWebsiteWebsiteBucket0FD1C291
+        PolicyDocument:
+          Statement:
+            - Action: s3:GetObject
+              Effect: Allow
+              Principal:
+                CanonicalUser:
+                  Fn::GetAtt:
+                    - StaticWebsiteDistributionOrigin1S3Origin3045572F
+                    - S3CanonicalUserId
+              Resource:
+                Fn::Join:
+                  - ""
+                  - - Fn::GetAtt:
+                        - StaticWebsiteWebsiteBucket0FD1C291
+                        - Arn
+                    - /*
+            - Action: 's3:*'
+              Effect: Deny
+              Principal: '*'
+              Resource:
+                Fn::Join:
+                  - ""
+                  - - Fn::GetAtt:
+                        - StaticWebsiteWebsiteBucket0FD1C291
+                        - Arn
+                    - /*
+              Condition:
+                Bool:
+                  'aws:SecureTransport': false
+          Version: "2012-10-17"
+      Metadata:
+        aws:cdk:path: TodoStack/StaticWebsite/WebsiteBucket/Policy/Resource
+    
+  StaticWebsiteDistributionOrigin1S3Origin3045572F:
+    Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
+    Properties:
+      CloudFrontOriginAccessIdentityConfig:
+        Comment: Identity for TodoStackStaticWebsiteDistributionOrigin19A936D09
+    Metadata:
+      aws:cdk:path: TodoStack/StaticWebsite/Distribution/Origin1/S3Origin/Resource
+  
+  StaticWebsiteDistributionBAD21F75:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        CacheBehaviors:
+          - AllowedMethods:
+              - GET
+              - HEAD
+              - OPTIONS
+              - PUT
+              - PATCH
+              - POST
+              - DELETE
+            CachePolicyId: 4135ea2d-6df8-44a3-9df3-4b5a84be39ad
+            Compress: true
+            PathPattern: /api/v1/*
+            TargetOriginId: TodoStackStaticWebsiteDistributionOrigin29F14BA12
+            ViewerProtocolPolicy: allow-all
+          - AllowedMethods:
+              - GET
+              - HEAD
+              - OPTIONS
+              - PUT
+              - PATCH
+              - POST
+              - DELETE
+            CachePolicyId: 4135ea2d-6df8-44a3-9df3-4b5a84be39ad
+            Compress: true
+            PathPattern: /api/v2/*
+            TargetOriginId: TodoStackStaticWebsiteDistributionOrigin30085ED37
+            ViewerProtocolPolicy: allow-all
+        DefaultCacheBehavior:
+          CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6
+          Compress: true
+          TargetOriginId: TodoStackStaticWebsiteDistributionOrigin19A936D09
+          ViewerProtocolPolicy: redirect-to-https
+        DefaultRootObject: index.html
+        Enabled: true
+        HttpVersion: http2
+        IPV6Enabled: true
+        Origins:
+          - DomainName:
+              Fn::GetAtt:
+                - StaticWebsiteWebsiteBucket0FD1C291
+                - RegionalDomainName
+            Id: TodoStackStaticWebsiteDistributionOrigin19A936D09
+            S3OriginConfig:
+              OriginAccessIdentity:
+                Fn::Join:
+                  - ""
+                  - - origin-access-identity/cloudfront/
+                    - Ref: StaticWebsiteDistributionOrigin1S3Origin3045572F
+          - CustomOriginConfig:
+              OriginProtocolPolicy: http-only
+              OriginSSLProtocols:
+                - TLSv1.2
+            DomainName:
+              Fn::GetAtt:
+                - ContainerApiTodoApiServiceLB3EB89DD0
+                - DNSName
+            Id: TodoStackStaticWebsiteDistributionOrigin29F14BA12
+          - CustomOriginConfig:
+              OriginProtocolPolicy: https-only
+              OriginSSLProtocols:
+                - TLSv1.2
+            DomainName:
+              Fn::Join:
+                - ""
+                - - Ref: ServerlessApiTodoApiBE35F21F
+                  - .execute-api.
+                  - Ref: AWS::Region
+                  - "."
+                  - Ref: AWS::URLSuffix
+            Id: TodoStackStaticWebsiteDistributionOrigin30085ED37
+            OriginPath: ""
+    Metadata:
+      aws:cdk:path: TodoStack/StaticWebsite/Distribution/Resource
+  
+  StaticWebsiteBucketDeploymentAwsCliLayer098AFAC5:
+    Type: AWS::Lambda::LayerVersion
+    Properties:
+      Content:
+        S3Bucket: !Ref s3AssetBucketName
+        S3Key: deploymentclilayer.zip
+      Description: /opt/awscli/aws
+    Metadata:
+      aws:cdk:path: TodoStack/StaticWebsite/BucketDeployment/AwsCliLayer/Resource
+      aws:asset:path: asset.c409e6c5845f1f349df8cd84e160bf6f1c35d2b060b63e1f032f9bd39d4542cc.zip
+      aws:asset:is-bundled: false
+      aws:asset:property: Content

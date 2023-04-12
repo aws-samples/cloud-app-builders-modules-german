@@ -1,0 +1,3 @@
+### Zusammenfassung und nächste Schritte
+Anforderungen geben dir eine solide Grundlage, um eine Anwendung erfolgreich zu betreiben.
+In den nächsten Modulen wird die ToDo-Anwendung zusammengebaut. Es werden die einzelnen Services in dem Architekturdiagramm genauer beschrieben und die technischen Konzepte, die dahinterstecken, werden erklärt. Das Ergebnis ist die funktionsfähige ToDo-Anwendung und Kenntnisse wie Clouddienste die besprochenen Anforderungen erfüllen.

@@ -1,0 +1,3 @@
+{{$file := .Get 0}}
+{{$contents := printf "%s/%s" "content/shared/" $file | readFile }}
+{{ $contents | markdownify  }}

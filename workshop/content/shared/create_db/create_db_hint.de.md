@@ -1,0 +1,1 @@
+In der **[Dokumentation](https://docs.aws.amazon.com/de_de/AmazonRDS/latest/UserGuide/CHAP_Tutorials.WebServerDB.CreateDBInstance.html)** wird das Erstellen einer MySQL RDS Datenbank Instanz mit etwas anderen Einstellungen beschrieben.

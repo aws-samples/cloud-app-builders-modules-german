@@ -1,0 +1,5 @@
+{{$file := printf "%s/%s" "content/shared/" (.Get 0)}}
+{{$old := .Get 1}}
+{{$new := .Get 2}}
+{{$replaced := replace (readFile $file) $old $new}}
+{{ $replaced | markdownify }}

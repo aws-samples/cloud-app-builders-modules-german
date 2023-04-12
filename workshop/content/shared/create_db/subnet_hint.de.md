@@ -1,0 +1,1 @@
+In der **[Dokumentation](https://docs.aws.amazon.com/de_de/AmazonRDS/latest/UserGuide/USER_VPC.WorkingWithRDSInstanceinaVPC.html#USER_VPC.InstanceInVPC)** beschreibt Schritt 2 wie du eine DB Subnetz Gruppe erstellst.

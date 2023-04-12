@@ -1,0 +1,1 @@
+In der **[Dokumentation](https://docs.aws.amazon.com/de_de/AmazonECR/latest/userguide/repository-create.html )** sind die einzelnen Schritte zur Erstellung eines ECR Repositories beschrieben.

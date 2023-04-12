@@ -1,0 +1,111 @@
+---
+AWSTemplateFormatVersion: "2010-09-09"
+Description: >
+  Deploys an Aurora RDS DB
+
+Metadata:
+  AWS::CloudFormation::Interface:
+    ParameterGroups:
+      - Label:
+          default: RDS
+        Parameters:
+          - dbcapacity
+    ParameterLabels:
+      dbcapacity:
+        default: Database storage capacity
+   
+Parameters:
+  dbcapacity:
+    Type: Number
+    Default: 25
+    Description: Define the storage capacity for the database in GiB
+  dbPassword:
+    NoEcho: true
+    Type: String
+  dbUsername:
+    NoEcho: true
+    Type: String
+
+
+
+Resources:
+
+  RDSMySQL:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      MonitoringInterval: 60
+      AllocatedStorage: 1
+      AllowMajorVersionUpgrade: false
+      AutoMinorVersionUpgrade: true
+      AvailabilityZone: !ImportValue AvailabilityZone1
+      BackupRetentionPeriod: 7
+      CopyTagsToSnapshot: true
+      DBInstanceClass: db.t2.small
+      DBInstanceIdentifier: workshop-db
+      DBName: todo
+      DBParameterGroupName: default.mysql5.7
+      DBSubnetGroupName: !Ref DBSubnetGroup
+      DeleteAutomatedBackups: true #for production workloads set this to false
+      DeletionProtection: true #for production workloads set this to true
+      #EnableCloudwatchLogsExports: #for production workloads
+      #  - String
+      EnablePerformanceInsights: false #not supported with t2 instance size
+      Engine: mysql
+      EngineVersion: 5.7
+      MasterUsername: !Ref dbUsername
+      MasterUserPassword: !Ref dbPassword
+      # MonitoringInterval: 0
+      #MonitoringRoleArn: String #not specified because MonitoringInterval = 0
+      MultiAZ: true
+      #OptionGroupName: String
+      #PerformanceInsightsKMSKeyId: String
+      #PerformanceInsightsRetentionPeriod: 7
+      Port: 3306
+      #PreferredBackupWindow: String
+      #PreferredMaintenanceWindow: String
+      PubliclyAccessible: false
+      StorageEncrypted: true
+      StorageType: gp2 #for production workload, io1 might be the better option
+      Tags:
+        - Key: Name
+          Value: Workshop MySQL DB
+      VPCSecurityGroups:
+        - !Ref RDSMySQLDBSecurityGroup
+
+  RDSMySQLDBSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: RDS SG group
+      Tags:
+        - Key: Name
+          Value: Workshop-RDS-SG
+      VpcId: !ImportValue VPC
+      SecurityGroupEgress:
+      - IpProtocol: tcp
+        FromPort: 3306
+        ToPort: 3306
+        CidrIp: 0.0.0.0/0
+
+  DBSubnetGroup:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties:
+      DBSubnetGroupDescription: Private Subnets
+      SubnetIds:
+        - !ImportValue VPC-SubPublicA
+        - !ImportValue VPC-SubPublicB
+      Tags:
+        - Key: Name
+          Value: private subnets
+
+Outputs:
+
+  RDSMySQLEndpointAddress:
+    Value: !GetAtt RDSMySQL.Endpoint.Address
+    Description: RDSMySQL Endpoint Address
+    Export:
+      Name: RDSMySQLEndpointAddress
+  RDSMySQLEndpointPort:
+    Value: !GetAtt RDSMySQL.Endpoint.Port
+    Description: RDSMySQL Endpoint Port
+    Export:
+      Name: RDSMySQLEndpointPort

@@ -1,0 +1,1 @@
+In der **[Dokumentation](https://docs.aws.amazon.com/de_de/elasticloadbalancing/latest/application/create-application-load-balancer.html)** sind einzelne Schritte beschrieben wie ein Application Load Balancer erstellt wird.

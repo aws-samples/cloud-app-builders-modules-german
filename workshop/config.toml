@@ -1,0 +1,60 @@
+RelativeURLs=true
+CanonifyURLs=true
+languageCode = "de-DE"
+defaultContentLanguage = "de"
+disableLanguages = ["en", "fr"]
+
+title = "ICT Berufsbildung Schweiz - ÜK Module"
+theme = "learn"
+metaDataFormat = "yaml"
+defaultContentLanguageInSubdir= true
+
+uglyurls = true
+sectionPagesMenu = "main"
+pygmentsCodeFences = true
+pygmentsStyle = "monokai"
+
+[params]
+  description = "Cloud - ÜK Module"
+  author = "Amazon AWS"
+  disableBreadcrumb = false
+  disableNextPrev = false
+  themeVariant = "blue"
+  disableSearch = false
+  disableAssetsBusting = true
+  disableLanguageSwitchingButton = false
+  disableShortcutsTitle = true
+  disableInlineCopyToClipBoard = true
+
+[outputs]
+home = [ "HTML", "RSS", "JSON"]
+
+[privacy.youtube]
+    disable = false
+    privacyEnhanced = true
+[privacy.twitter]
+    disable = false
+    enableDNT = true
+    simple = true
+
+[markup]
+  defaultMarkdownHandler = "goldmark"
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[Languages]
+[Languages.de]
+title = "Cloud - ÜK Module"
+weight = 1
+languageName = "Deutsch"
+
+[Languages.en]
+title = "Cloud - ÜK Module"
+weight = 1
+languageName = "English"
+
+[Languages.fr]
+title = "Mon atelier AWS"
+weight = 2
+languageName = "Français"

@@ -1,0 +1,1 @@
+Diese **[Webseite](https://www.agile-academy.com/de/product-owner/nichtfunktionale-anforderungen-als-user-stories/)** hat weiter Beispiele für funktionale und nichtfunktionale Anforderungen, an denen du dich orientieren kannst.
