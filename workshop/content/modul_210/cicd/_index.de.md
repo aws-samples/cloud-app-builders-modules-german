@@ -113,8 +113,9 @@ In diesem Schritt wird eine Änderung im CodeCommit Repository vorgenommen. Dies
     Your browser does not support the video tag.  
 </video>
 
-1. `def index():` finden. Diese Methode stellt die Antwort auf die Integritätsprüfung vor. 
-1. Den String anpassen, sodass ein anderer Text zurückgegeben wird.
+1. In **Cloud9**, `cloud-app-builders-modules-german/src/container-api/api.py` öffnen.
+1. Finde die Zeile mit dem Code `data = Todo.query.all()` in der Methode `get` der Klasse `AllTodosResource`. Diese Methode gibt alle Todos die in der Datenbank gespeichert sind zurück.
+1. Die Todos sollen alphabetisch sortiert sein. Ändere dafür den Code von `data = Todo.query.all()` zu `data = Todo.query.order_by(Todo.title.asc())`. Dadurch wird das Ergebnis der Anfrage an die Datenbank alphabetisch absteigend nach dem Title der Todos sortiert.
 
 Jetzt kann die Änderungen im CodeCommit Repository veröffentlicht werden:
 
