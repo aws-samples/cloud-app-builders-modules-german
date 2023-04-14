@@ -121,7 +121,7 @@ Jetzt kann die Änderungen im CodeCommit Repository veröffentlicht werden:
 
 ```bash
 git add src
-git commit -m "Modify / response body"
+git commit -m "Update Todo API v1 to order todos alphabetically"
 git push cc main
 ```
 

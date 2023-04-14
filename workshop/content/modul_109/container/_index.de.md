@@ -46,17 +46,8 @@ Erstelle ein Repository für den Frontend Container mit Hilfe von Amazon Elastic
 5. Die Erstellung mit **Create repository** abschliessen.
 {{% /expand%}}
 
-#### Klonen des Source Code Repositories
+{{% include "source_code_repository.de.md" %}}
 
-1. Unter Services den Dienst **Cloud9** auswählen.
-2. Klicke auf **Create environment**.
-3. Nutze als Name ``Uek Umgebung``. Lass alle Einstellungen gleich und wähle bei Network settings **Secure Shell (SSH)** aus.
-4. Die Erstellung der Umgebung kann einen kurzen Moment dauern. Klicke dann auf **Open**. Nun solltest du ein Terminal sehen können, wie in der Einleitung bereits beschrieben.
-5. Kopiere nun in dein Terminal folgenden Befehl. Dadurch wird das Repository nun geklont, was einen Moment dauern kann.
-```bash
-git clone https://github.com/aws-samples/cloud-app-builders-modules-german.git
-```
-6. Nun ist auf der linken Seite in Cloud9 der Ordner ``cloud-app-builders-modules-german`` sichtbar und hat die gleiche Struktur und Inhalt wie das Github Repository.
 
 #### Erstellung und Veröffentlichung der Container Images
 
