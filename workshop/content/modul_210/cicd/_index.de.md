@@ -42,6 +42,15 @@ ___
 ### Anwendung
 In den nächsten Schritten wirst du Stück für Stück deine CI/CD-Pipeline erstellen. Sie besteht wie bereits besprochen aus CodeCommit, CodeBuild und CodeDeploy.
 
+{{% notice info %}}
+Bei AWS Academy stehen nicht alle Dienste und Funktionen in vollem Umfang zur Verfügung. In AWS Academy kannst du nicht AWS CodePipeline und AWS CodeBuild nutzen. Deshalb haben wir Videos, die zeigen wie CI/CD in AWS konfiguriert und ausgeführt wird, aufgezeichnet. Wenn du diesen Workshop in einem AWS Account der nicht durch AWS Academt bereitgestellt wird folgst, dann kannst du der Anleitung folgen.
+{{% /notice%}}
+
+<video width=100% controls autoplay loop>
+    <source src="/images/AWS CodePipeline Creation.mp4" type="video/mp4">
+    Your browser does not support the video tag.  
+</video>
+
 #### Bereitstellung des Repositorys
 
 1. Unter **Services**, den Dienst **CodeCommit** auswählen.
@@ -56,7 +65,7 @@ Zuerst wird ein leeres Code Repository benötigt, in welches der Source Code der
 1. Unter **Services**, den Dienst **Cloud9** auwählen.
 1. Im Command Line Interface in Cloud9 zum Order `tdb - depending on final location` wechseln
 1. Den Befehl `git remote add cc codecommit::eu-central-1://todos_app` eingeben, um ein Origin mit dem Namen `cc` zu erstellen. 
-1. Danach den Befehl `git push cc master` eingeben, um den Code an das neue CodeCommit Repository zu schicken.
+1. Danach den Befehl `git push cc main` eingeben, um den Code an das neue CodeCommit Repository zu schicken.
 
 #### Bereitstellung des Build Pipelines
 
@@ -79,7 +88,7 @@ Im nächsten Schritt kann die Pipeline erstellt werden, die den Source Code vera
 5. Auf **Next** klicken.
 6. Bei **Source Provider**, **AWS CodeCommit** auswählen.
 7. Bei **Repository Name**, das vorher erstelle CodeCommit Repository auswählen.
-8. Bei **Branch Name**, `master` auswählen.
+8. Bei **Branch Name**, `main` auswählen.
 9. Auf **Next** klicken.
 10. Bei **Build Provider**, **AWS CodeBuild** auswählen.
 11. Klick auf **Create project**, um ein CodeBuild Project zu erstellen.
@@ -90,7 +99,7 @@ Im nächsten Schritt kann die Pipeline erstellt werden, die den Source Code vera
    5. Sicherstellen, dass  ``Enable this flag if you want to build Docker images or want your builds to get elevated privileges`` ausgewählt ist. Ein Docker Image muss gebaut werden.
    6. Im Abschnitt **Service role**, bei **Role name**, ``TodosAppBackendBuildRole`` eingeben.
    7. Im Abschnitt **Buildspec**, bei **Buildspec name**, `src/container-api/buildspec.yml` eingeben.
-   8. Im Abschnitt **Logs**, bei **Group name** **TodosApp** eingeben, und bei **Stream name**, ``BackendBuild`` eingeben.
+   8. Im Abschnitt **Logs**, bei **Group name** ``TodosApp`` eingeben, und bei **Stream name**, ``BackendBuild`` eingeben.
    9. Auf **Continue to CodePipeline** klicken.
 12. Sicherstellen, dass das vorher erstellte Build Project ausgewählt ist, und dannach auf **Next** klicken.
    10. Bei **Deploy provider**, **Amazon ECS** auswählen.
@@ -117,8 +126,12 @@ Im nächsten Schritt wird der Zugriff auf das CodeCommit Repository konfiguriert
 Nun muss der Build Prozess einmalig manuell gestartet werden. Zurück in CodeBuild Pipelines, die Pipeline auswählen, dann auf **Release Change** klicken. Die einzelnen Schritte der CI/CD können über die Pipeline direkt überwacht werden.
 
 #### Veröffentlichung einer Änderung 
-
 In diesem Schritt wird eine Änderung im CodeCommit Repository vorgenommen. Dieser wird danach automatisch über die CI/CD Pipeline veröffentlicht.
+
+<video width=100% controls autoplay loop>
+    <source src="/images/AWS CodePipeline Demo.mp4" type="video/mp4">
+    Your browser does not support the video tag.  
+</video>
 
 1. In **Cloud9**, `src/container-api/api.py` öffnen. 
 1. `def index():` finden. Diese Methode stellt die Antwort auf die Integritätsprüfung vor. 
@@ -129,7 +142,7 @@ Jetzt kann die Änderungen im CodeCommit Repository veröffentlicht werden:
 ```bash
 git add src
 git commit -m "Modify / response body"
-git push cc master
+git push cc main
 ```
 
 In der AWS Console in den Details der **CodePipeline** kann der Fortschritt der Änderung überwacht werden. Nach Abschluss der Veröffentlichung wird die neue Antwort unter `/todos/v1/` sichtbar werden.
