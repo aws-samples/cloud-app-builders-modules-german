@@ -37,7 +37,7 @@ Die Module sollen auf AWS Academy durchgeführt werden. Es ist möglich diese au
 │   ├── config.toml             <-- Hugo Konfiguration für die Workshop Webseite
 │   ├── content                 <-- Markdown Dateien für die Workshopseiten
 │   ├── layouts                
-│   ├── public                  <-- MHTL output basierend auf den Hugo-Dateien
+│   ├── public                  <-- HTML output basierend auf den Hugo-Dateien
 │   ├── requirements.txt        
 │   ├── static                  <-- Alle statischen Assets für den Workshop (z.B. Bilder, Dokumente, etc)
 │   └── themes                  <-- Theme für die Webseite
