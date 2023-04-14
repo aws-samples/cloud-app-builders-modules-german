@@ -4,9 +4,9 @@
 
 6. Unter Port mappings den Port **5000** angeben.
 7. Im Abschnitt Environment Variables die folgenden Umgebungsvariablen (case sensitive) eingeben:
-    - Key: **DB_USER** | Value: **clusteradmin**
-    - Key: **DB_PASSWORD** | Value: **todopassword**
-    - Key: **DB_HOST** | Value: **DNS Endpunkt der DB Instanz**
+    - **Key:** ``DB_USER`` | **Value:** ``clusteradmin``
+    - **Key:** ``DB_PASSWORD`` | **Value:** ``todopassword``
+    - **Key:** ``DB_HOST`` | **Value:** ``DNS Endpunkt der DB Instanz``
 8. Auf **Next** klicken.
 9. Bei Environment **AWS Fargate** wählen und als Operating system **Linux/X86_64**.
 10. Bei Task memory (GB) **0.5GB** auswählen.

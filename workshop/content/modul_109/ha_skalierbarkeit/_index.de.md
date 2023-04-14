@@ -72,7 +72,7 @@ Mit dieser Konfiguration leitet der Load Balancer nun alle Anfragen an die Targe
 1. In der Übersicht klick auf ``workshop-cluster``.
 1. Im Tab **Services** auf **Create** klicken.
 1. Als **Launch type** muss **Fargate** ausgewählt werden.
-1. Bei **Task Definition** muss ``workshop-frontend`` ausgewählt werden.
+1. Bei **Family** muss ``workshop-frontend`` ausgewählt werden.
 1. Als **Service name** ``frontend-service`` eingeben.
 1. Unter **Number of tasks** ``2`` eingeben.
 1. Klick auf **Next step**.
@@ -84,9 +84,7 @@ Mit dieser Konfiguration leitet der Load Balancer nun alle Anfragen an die Targe
 14. Im Abschnitt **Load balancing** die Option **Application Load Balancer** auswählen und den bereits erstellten ALB ``todoApp``.
 1. Unter **Production listener port** im Dropdown ``80:HTTP`` auswählen.
 1. Bei **Target group name** im Dropdown ``workshop-frontend``auswählen und auf **Next step** klicken.
-1. Im Schritt 3 **Set Auto Scaling (optional)** auf **Do not adjust** 
-1. **Next step** klicken.
-1. In der Übersicht klick auf **Create Service** und im darauffolgenden Statusfenster auf **View Service**.
+1. **Create** klicken.
 
 #### Test der ToDo-Liste
 

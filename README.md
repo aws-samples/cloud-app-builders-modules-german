@@ -3,7 +3,7 @@
 Dieses Repo enthält den Inhalt und die notwendigen Ressourcen für die schweizer [ICT](https://www.ict-berufsbildung.ch/) ÜK (Überbetriebliche Kurse) Module 109 und 210.
 Die Vorrausetzungen der Module wurden in Zusammenarbeit mit ICT festgelegt und von AWS (Amazon Web Services) Switzerland erstellt. Sie beinhalten theoretisches Grundwissen, vertiefteres Cloudwissen bezüglich der AWS Cloud und Schritt für Schritt-Anleitungen zur Erstellung der ToDo-Applikation, die als praktisches Beispiel für beide dient.
 
-Der Inhalt ist wie folgt aufgebaut und kann durch diesen [Link]():
+Der Inhalt ist wie folgt aufgebaut und kann durch diesen [Link](https://aws-samples.github.io/cloud-app-builders-modules-german/) aufgerufen werden:
 1. Einleitung
 2. Modul 109
 3. Modul 210
