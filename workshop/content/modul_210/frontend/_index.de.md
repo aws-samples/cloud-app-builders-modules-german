@@ -72,7 +72,9 @@ Als nächstes kann der Inhalt des Frontends in den Bucket kopiert werden.
 1. Kopiere den Namen des erstellten Buckets. Diesen wirst du im nächsten Schritt benötigen.
 1. Öffne in einem neuen Tab den Dienst **Cloud9** und öffne dort wieder deine Umgebung **Uek Umgebung**.
 1. Gehe in den Ordner **src/todo-frontend** durch ``cd src/todo-frontend``.
-1. Kopiere nun alle Dateien aus diesem Ordner in deinen Bucket. Ersetze DEIN_BUCKET durch den Namen deines erstellten Buckets. Sync wird genutzt, damit alle Dateien auf diesem Ordner kopiert werden.
+1. Führe ``npm install`` und danach ``npm run build``. Dadurch wird das Frontend zur Nutzung vorbereitet.
+1. Gehe nun in den Ordner **build**.
+1. Kopiere nun alle Dateien aus diesem Ordner in deinen Bucket. Ersetze DEIN_BUCKET durch den Namen deines erstellten Buckets. Sync wird genutzt, damit alle Dateien auf diesem Ordner kopiert werden. Du kannst in deinem Bucket sehen wie Stück für Stück die Dateien rüber kopiert werden. Während das Kopieren noch läuft, kannst du mit dem nächsten Schritt weitermachen.
 
 ```
 aws s3 sync . s3://DEIN_BUCKET
@@ -139,6 +141,11 @@ Teste nun die Funktionalitäten deiner ToDo-Anwendung:
 - **Prüfen der gelöschten Aufgaben**: Rufe wieder den erweiterten Link auf und prüfe, ob nun die Liste an Aufgaben kürzer geworden ist.
 
 ![Todos Daten](/images/todos_daten.png)
+
+<video width=100% controls autoplay loop>
+    <source src="/images/ToDoApp.mp4" type="video/mp4">
+    Your browser does not support the video tag.  
+</video>
 
 ### Zusammenfassung und nächste Schritte 
 Glückwunsch! Deine ToDo-Liste funktioniert nun und du hast sie erfolgreich getestet. 

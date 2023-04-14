@@ -20,9 +20,11 @@ pre = "<b>2. </b>"
 
 {{% include "network_introduction.de.md" %}}
 ### Anwendung
+Der gesamte praktische Teil dieses Moduls wird in der Region ``us-east-1`` durchgeführt und sollte auch nicht während der Durchführung geändert werden.
+
 #### Erstellen einer neuen VPC
 **Aufgabe:**
-Erstelle eine eigene VPC ohne Subnetze mit dem Adressbereich 172.100.0.0/16  und nutze als Tag Name: Workshop-VPC. Eine VPC ist immer an eine AWS Region gebunden.
+Erstelle eine eigene VPC ohne Subnetze mit dem Adressbereich ``172.100.0.0/16`` und nutze als Tag ``Name:Workshop-VPC``. Eine VPC ist immer an eine AWS Region gebunden.
 
 {{%expand "Hinweis" %}}
 In der **[Dokumentation](https://docs.aws.amazon.com/de_de/vpc/latest/userguide/working-with-vpcs.html#Create-VPC)** sind einzelne Schritte beschrieben wie man eine VPC erstellt.
@@ -50,10 +52,10 @@ zwischen VPCs oder mit einem On-Premise Datacenter ausgetauscht werden.
 Nach dem VPC selbst können individuelle Subnetze angelegt werden. 
 
 **Aufgabe:**
-Lege ein neues Subnetz Workshop-PublicA in deiner gerade erstellten VPC in der Availability Zone US East (N. Virginia / us-east-1a) an. Das Subnetz sollte den CIDR Block 172.100.1.0/24 nutzen.
+Lege ein neues Subnetz ``Workshop-PublicA`` in deiner gerade erstellten VPC in der Availability Zone ``US East (N. Virginia / us-east-1a)`` an. Das Subnetz sollte den CIDR-Block ``172.100.1.0/24`` nutzen.
 
 **Aufgabe:**
-Lege ein weiteres Subnetz Workshop-PublicB in deiner gerade erstellten VPC in der Availability Zone US East (N. Virginia / us-east-1b) an. Das Subnetz sollte den CIDR Block 172.100.2.0/24 nutzen.
+Lege ein weiteres Subnetz ``Workshop-PublicB`` in deiner gerade erstellten VPC in der Availability Zone ``US East (N. Virginia / us-east-1b)`` an. Das Subnetz sollte den CIDR-Block ``172.100.2.0/24`` nutzen.
 
 {{%expand "Hinweis" %}}
 In der **[Dokumentation](https://docs.aws.amazon.com/de_de/vpc/latest/userguide/working-with-subnets.html)** sind einzelne Schritte beschrieben wie man ein Subnetz erstellt.
@@ -72,7 +74,7 @@ Details aufgelistet (z.B. zugehöriges VPC, CIDR Range, freie IP Adressen etc.).
 6. Darunter auf **Add new subnet** klicken, um ein weiteres Subnetz hinzuzufügen und folgende Daten eingeben:
    1. Subnet name: `Workshop-PublicB`
    2. Availability Zone: `US East (N. Virginia / us-east-1b)`
-   3. IPv4 CIDR block: `172.100.2.0/24`. Eure Eingabemaske sollte anschliessend **[wie folgt](/images/subnet_creation.PNG)** aussehen.
+   3. IPv4 CIDR block: `172.100.2.0/24`. Eure Eingabemaske sollte anschliessend **[wie folgt](/images/subnet_creation.png)** aussehen.
 7. Mit einem Klick auf **Create subnet** die Erstellung abschliessen.
 {{% /expand%}}
 
@@ -81,14 +83,14 @@ Wenn in der Übersicht unter Subnets ein gerade erstelltes Subnetz per Checkbox 
 (z.B. Subnetz ID, VPC, AZ, Route tables etc.)
 {{% notice info %}}
 Die IP Adressen eines Subnetzes müssen aus dem zuvor definierten VPC CIDR Range stammen. Ein Subnetz ist immer einer einzigen 
-Availability Zone (AZ) zugeordnet. Um **hochverfügbare Architekturen** zu realisieren werden also mehrere Subnets in unterschiedlichen AZ's benötigt.
+Availability Zone (AZ) zugeordnet. Um **hochverfügbare Architekturen** zu realisieren werden also mehrere Subnets in unterschiedlichen AZ's benötigt. Falls in einer AZ ein Problem auftritt und die Container in dieser nicht genutzt werden können, so ist die andere AZ für die Anwendung immer noch verfügbar.
 {{% /notice%}}
 
 #### Internet Gateway erstellen
 Um eine Kommunikation zum Internet zu ermöglichen und um Ressourcen aus dem Internet zugänglich zu machen, muss ein Internet Gateway (IGW) erstellt werden:
 
 **Aufgabe:**
-Erstelle nun ein Internet Gateway Workshop-IGW und verbinde es mit deiner VPC Workshop-VPC. Nutze den Tag Name: Workshop-IGW.
+Erstelle nun ein Internet Gateway mit dem Namen ``Workshop-IGW``. Das neue Internet Gateway ist im Zustand *detached*. Um das zu ändern, musst du es mit deiner VPC *Workshop-VPC* verbinden.
 
 {{%expand "Hinweis" %}}
 In der **[Dokumentation](https://docs.aws.amazon.com/de_de/vpc/latest/userguide/VPC_Internet_Gateway.html)** sind einzelne Schritte beschrieben wie man ein Internet Gateway erstellt und mit seiner VPC verbindet.
@@ -122,7 +124,7 @@ Es ist eine Good Practice, eine neue Routing-Tabelle mit den entsprechenden Rege
 
 ##### Zuweisung der Subnetze
 **Aufgabe:**
-Weise nun die beiden Subnetze Workshop-PublicA und Workshop-PublicB der gerade erstellten Routing-Tabelle zu.
+Weise nun die beiden Subnetze ``Workshop-PublicA`` und ``Workshop-PublicB`` der gerade erstellten Routing-Tabelle zu.
 
 {{%expand "Hinweis" %}}
 In der **[Dokumentation](https://docs.aws.amazon.com/de_de/vpc/latest/userguide/WorkWithRouteTables.html#SubnetRouteTables)** sind einzelne Schritte beschrieben wie man seine Subnetze mit der Routing-Tabelle verbindet.
@@ -141,7 +143,7 @@ In der **[Dokumentation](https://docs.aws.amazon.com/de_de/vpc/latest/userguide/
 Nun muss die Regel (Route) angelegt werden, damit der ein- und ausgehende Netzwerkverkehr über das Internet Gateway geschickt wird.
 
 **Aufgabe:**
-Lege nun eine Regel (Route) an mit der Destination 0.0.0.0/0 (das Internet) und mit dem Ziel (target) Internet Gateway Workshop-IGW. 
+Lege nun eine Regel (Route) an mit der Destination ``0.0.0.0/0`` (das Internet) und mit dem Ziel (target) Internet Gateway ``Workshop-IGW``. 
 
 {{%expand "Lösung" %}}
 1. Klick auf den Abschnitt **Routes**.
@@ -178,7 +180,7 @@ Anbei die Konfiguration für die erste Security Group für den Zugriff aus dem I
 Der Zugriff auf den Backend Container vom Load Balancer kann durch eine zweite Security Group erteilt werden.
 
 **Aufgabe:**
-Erstelle eine neue Security Group Workshop-ECS-Backend-SG für deine VPC Workshop-VPC. Füge eine Inboud rule hinzu, die Zugriff durch das Protokoll Custom TCP auf den Port 5000 erlaubt. Als Quelle soll die Security Group des Load Balancers Workshop-ALB-SG genutzt werden.
+Erstelle eine neue Security Group ``Workshop-ECS-Backend-SG`` für deine VPC Workshop-VPC. Füge eine Inboud rule hinzu, die Zugriff durch das Protokoll ``Custom TCP`` auf den ``Port 5000`` erlaubt. Als Quelle soll die Security Group des Load Balancers ``Workshop-ALB-SG`` genutzt werden.
 
 {{%expand "Lösung" %}}
 1. Links unter **SECURITY** auf **Security groups** klicken. Bereits bestehende Security Groups werden in der Übersicht angezeigt.
@@ -199,7 +201,7 @@ Erstelle eine neue Security Group Workshop-ECS-Backend-SG für deine VPC Worksho
 Der Zugriff der Backend Container Instanzen auf die Datenbank kann durch eine dritte Security Group erteilt werden.
 
 **Aufgabe:**
-Erstelle eine neue Security Group Workshop-ECS-Backend-SG für deine VPC Workshop-VPC. Füge eine Inboud rule hinzu, die Zugriff durch das Protokoll MYSQL/Aurora erlaubt. Als Quelle soll die Security Group des Backend Containers Workshop-ECS-Backend-SG genutzt werden.
+Erstelle eine neue Security Group ``Workshop-RDS-SG`` für deine VPC Workshop-VPC. Füge eine ``Inboud rule`` hinzu, die Zugriff durch das Protokoll ``MYSQL/Aurora`` erlaubt. Als Quelle soll die Security Group des Backend Containers ``Workshop-ECS-Backend-SG`` genutzt werden.
 
 {{%expand "Lösung" %}}
 1. Links unter **SECURITY** auf **Security groups** klicken. Bereits bestehende Security Groups werden in der Übersicht angezeigt.

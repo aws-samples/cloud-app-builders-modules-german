@@ -52,22 +52,23 @@ Erstelle ein Repository für den Frontend Container mit Hilfe von Amazon Elastic
 2. Klicke auf **Create environment**.
 3. Nutze als Name ``Uek Umgebung``. Lass alle Einstellungen gleich und wähle bei Network settings **Secure Shell (SSH)** aus.
 4. Die Erstellung der Umgebung kann einen kurzen Moment dauern. Klicke dann auf **Open**. Nun solltest du ein Terminal sehen können, wie in der Einleitung bereits beschrieben.
-5. Öffne in einem neuen Tab das Github Repository **[Github Repository HIER EINFÜGEN]()**. Klicke oben rechts auf **Code** und kopiere den Link, um das Repository mit **HTTPS** zu klonen. 
+5. Öffne in einem neuen Tab das **[Github Repository](https://github.com/aws-samples/cloud-app-builders-modules-german)**. Klicke oben rechts auf **Code** und kopiere den Link, um das Repository mit **HTTPS** zu klonen. 
 6. Gehe nun zurück zu **Cloud9**. Tippe nun in dein Terminal unten ein ``git clone`` und den gerade kopierten Link. Dadurch wird das Repository nun geklont, was einen Moment dauern kann.
+7. Nun ist auf der linken Seite in Cloud9 der Ordner cloud-app-builders-modules-german sichtbar und hat die gleiche Struktur und Inhalt wie das Github Repository.
 
 #### Erstellung und Veröffentlichung der Container Images
 
 ##### Erstellung des Backend Container Images:
-1. Im Terminal in Cloud9 in das Verzeichnis **src/container-api** wechseln mit ``cd src/container-api``.
+1. Im Terminal in Cloud9 in das Verzeichnis **container-api** wechseln mit ``cd ./cloud-app-builders-modules-german/src/container-api``. Falls du dir mit dem Befehl unsicher bist, kannst du [hier](https://phlow.de/magazin/terminal/datei-ordner-befehle/) nochmal nachschauen.
 2. Zum Amazon ECR Browser Tab wechseln und dort auf das ``workshop-backend`` Repository klicken.
-3. Ein Klick auf **View push commands** zeigt die notwendigen Schritte als Kommandos für die Erstellung und die Publikation des Container Images.
+3. Ein Klick auf **[View push commands](/images/ecr_push.png)** zeigt die notwendigen Schritte als Kommandos für die Erstellung und die Publikation des Container Images. Da Cloud9 eine Linux EC2-Instanz nutzt, brauchst du die macOS/Linus-Befehle.
 4. Die Kommandos nacheinander kopieren und in dem Terminal Fenster in der AWS Cloud9 Instanz einfügen und ausführen.
 5. Im Tab mit Amazon ECR das Fenster mit den push commands schliessen.
 
 ##### Erstellung des Frontend Container Images:
-1. Im Terminal in Cloud9 in das Verzeichnis **src/todo-frontend** wechseln mit ``cd src/todo-frontend``.
+1. Im Terminal in Cloud9 in das Verzeichnis **todo-frontend** wechseln mit ``cd ../todo-frontend``. Da du schon im Directory cloud-app-builders-modules-german/src/ bist, wechseln wir vom Ordner container-api zu todo-frontend.
 2. Zum Amazon ECR Browser Tab wechseln und dort auf das ``workshop-frontend`` Repository klicken.
-3. Ein Klick auf **View push commands** zeigt die notwendigen Schritte als Kommandos für die Erstellung und die Publikation des Container Images.
+3. Ein Klick auf **View push commands** zeigt die notwendigen Schritte als Kommandos für die Erstellung und die Publikation des Container Images. Da Cloud9 eine Linux EC2-Instanz nutzt, brauchst du die macOS/Linus-Befehle.
 4. Die Kommandos nacheinander kopieren und in dem Terminal Fenster in der AWS Cloud9 Instanz einfügen und ausführen.
 5. Im Tab mit Amazon ECR das Fenster mit den push commands schliessen.
 

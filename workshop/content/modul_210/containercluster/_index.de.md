@@ -177,12 +177,12 @@ In der **[Dokumentation](https://docs.aws.amazon.com/de_de/AmazonECS/latest/deve
 
 {{%expand "Lösung" %}}
 1. Unter Services den Dienst **Elastic Container Service** auswählen.
-2. Im Bereich Amazon ECS -  auf **Clusters** danach auf **Create Cluster** klicken.
-3. Im ersten Schritt als Template **Networking only** auswählen und **Next step** klicken.
-4. Als **Cluster name** ``workshop-cluster`` eingeben.
-5. Bei CloudWatch Container Insights die Option **Enable Container Insights** auswählen.
-6. Klick auf **Create**.
-7. Klick auf **View Cluster**.
+1. Im Bereich Amazon ECS -  auf **Clusters** danach auf **Create Cluster** klicken.
+1. Als **Cluster name** ``workshop-cluster`` eingeben.
+1. Unter Networking **workshop-VPC** auswählen und die Subnetze **Workshop-PublicA** und **Workshop-PublicB**.
+1. Bei CloudWatch Container Insights die Option **Enable Container Insights** auswählen.
+1. Klick auf **Create**.
+1. Klick auf **View Cluster**.
 {{% /expand%}}
 <!-- Fix this with shortcodes -->
 <div class="notices note">

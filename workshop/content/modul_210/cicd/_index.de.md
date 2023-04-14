@@ -52,7 +52,7 @@ In den nächsten Schritten wirst du Stück für Stück deine CI/CD-Pipeline erst
 #### Einrichtung des CodeCommit Repositories 
 Zuerst wird ein leeres Code Repository benötigt, in welches der Source Code der Beispielanwendung geschickt werden kann.
 
-1. Auf **Clone URL** klicken und dannach **Clone HTTPS (GRC)** kopieren.  Das **git clone** am Anfang muss entfernt werde - z.B. ``codecommit::eu-central-1://todos_app``.
+1. Auf **Clone URL** klicken und dannach **Clone HTTPS (GRC)** kopieren.  Das **git clone** am Anfang muss entfernt werden - z.B. ``codecommit::eu-central-1://todos_app``.
 1. Unter **Services**, den Dienst **Cloud9** auwählen.
 1. Im Command Line Interface in Cloud9 zum Order `tdb - depending on final location` wechseln
 1. Den Befehl `git remote add cc codecommit::eu-central-1://todos_app` eingeben, um ein Origin mit dem Namen `cc` zu erstellen. 
@@ -101,7 +101,7 @@ Im nächsten Schritt kann die Pipeline erstellt werden, die den Source Code vera
 
 Umgebungsvariablen helfen für die Steuerung und Parameterisierung.
 
-1. Auf **Build Project** , **TodosBackendService** auswählen, und dannach **Edit**, **Environment**.
+1. Auf **Build Project**, **TodosBackendService** auswählen, und dannach **Edit**, **Environment**.
 1. Auf **Additional Configuration** klicken.
 1. Im Abschnitt **Environment variables**, die Folgende Variables hinzufügen:
    1. **AWS_ACCOUNT_ID** - das ID des AWS-Accounts (im AWS Console **User-Menu** sichtbar) - z.b. `112233445566`

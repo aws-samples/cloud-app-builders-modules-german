@@ -138,7 +138,7 @@ Mit der aufgeschriebenen **Invoke URL** kann das API getestet werden. Da die Dyn
 noch keine ToDo's gespeichert sind, sollte es eine leere Liste von ToDos zurückgeben. 
 Dazu die **Invoke URL** nehmen und mit `/api/v2/todos` erweitern wie zum Beispiel:
 
-[https:///abcdef.execute-api.eu-central-1.amazonaws.com/api/v2/todos](https:///abcdef.execute-api.eu-central-1.amazonaws.com/api/v2/todos)
+[https://abcdef.execute-api.eu-central-1.amazonaws.com/api/v2/todos](https://abcdef.execute-api.eu-central-1.amazonaws.com/api/v2/todos)
 
 Wenn diese URL in den Browser eingegeben wird, wird eine leere JSON-Liste zurückgeben:
 
@@ -163,7 +163,7 @@ Im nächsten Schritt wird zusätzlich zum Container basierten API das Serverless
 Nun kannst du definieren wie mit Serverless-API interagiert werden soll.
 1. Im Abschnitt **Behaviors**, auf **Create Behavior** klicken.
 1. Bei **Path Pattern**, `/api/v2/*` eingeben.
-1. Bei **Origin and origin groups**, das Origin von vorher auswählen.
+1. Bei **Origin and origin groups**, das Origin von gerade auswählen.
 1. Im Abschnitt **Viewer**, bei **Viewer protocol policy** `HTTPS only` auswählen.
 1. Bei **Allowed HTTP Methods** `GET, HEAD, OPTIONS, PUT, POST, PATCH, DELETE` auswählen.
 7. Unter **Cache key and origin requests** wähle **Cache policy and orgin request policy** aus. Klicke bei **Cache Policy** auf `CachingDisabled`. Durch diese Einstellung werden deine Anfragen nicht gecachet, sodass du immer die neueste Version deiner Todo-Liste bekommst, wenn du die Seite aufrufts.
@@ -180,8 +180,13 @@ Rufe deine ToDo-Webseite auf unter dem Domain name, den du in deiner neuen Cloud
 Um das Serverless-API zu nutzen, muss der Pfad, der in Behaviors in CloudFront definiert ist, aufgerufen werden. Dafür sind folgende Schritte nötig:
 1. Rufe deine ToDo-Webseite auf.
 1. Nutze den Rechtsklick, um die Webseite zu **[inspizieren](https://digitalfahrschule.de/element-untersuchen-im-chrome/)**.
-1. Klicke auf die **Console** und führe dort ``sessionStorage.setItem("apiBase", "/api/v2/")``. Dadurch wird nun die serverlosen API genutzt.
+1. Klicke auf die **Console** und führe dort ``sessionStorage.setItem("apiBase", "/api/v2/")``. Dadurch wird nun die serverlose API genutzt.
 1. Um wieder die Container zu nutzen, führe ``sessionStorage.setItem("apiBase", "/api/v1/")`` in der Console aus. Nun sind deine Aufgaben wieder zusehen. 
+
+<video width=100% controls autoplay loop>
+    <source src="/images/ServerlessApp.mp4" type="video/mp4">
+    Your browser does not support the video tag.  
+</video>
 
 Teste nun die Funktionalitäten deiner ToDo-Anwendung:
 - **Überprüfe deine leere ToDo-Liste**: Füge deinem Domain Namen `/api/v2/todos` hinzu. Wenn du diesen öffnest, sollte die Liste leer sein.

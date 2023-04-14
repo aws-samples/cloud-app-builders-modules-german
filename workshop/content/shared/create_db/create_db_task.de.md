@@ -1,8 +1,8 @@
 #### Erstellen einer neuen relationalen Datenbank
 **Aufgabe:**
-Erstelle eine eigene Amazon RDS Datenbank mit dem Namen ``workshop-db``. Die Datenbank soll als Datenbankengine ``MySQL 8.0.30`` benutzen. 
+Erstelle eine eigene Amazon RDS Datenbank mit dem Namen ``workshop-db``. Die Datenbank soll als Datenbankengine ``MySQL 8.0.28`` benutzen. 
 
-Da diese Applikation nicht produktionsfähig sein muss kannst du Kosten sparen indem du die Datenbank als Dev/Test Datenbank erstellst, nur eine einzelne Datenbank Instanz erstellst, den burstable Typ ``db.t3.micro`` auswählst, und storage autoscaling deaktivierst.
+Da diese Applikation nicht produktionsfähig sein muss kannst du Kosten sparen indem du die Datenbank als Dev/Test Datenbank erstellst. Damit wir später ein Failover testen können, nutze die ``Multi-AZ DB instance``. Wähle den burstable Typ ``db.t3.micro`` aus und deaktiviere storage autoscaling.
 
 Die Datenbank soll in der zuvor erstellten Subnetzgruppe mit dem Namen ``workshop-db-subnet-group`` platziert werden. Für die Security Gruppe soll ``Workshop-RDS-SG`` ausgewählt werden. Diese Security Gruppe erlaubt nur Netzwerkverbindungen von den Servern die die Applikation ausführen.
 Außer­dem musst du sicherstellen, dass sich die Applikation mit dem Master username``clusteradmin`` und dem Master password ``todopassword`` bei der Datenbank authentifizieren/anmelden kann.

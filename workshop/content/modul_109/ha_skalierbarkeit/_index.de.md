@@ -81,8 +81,7 @@ Mit dieser Konfiguration leitet der Load Balancer nun alle Anfragen an die Targe
 1. Bei **Security groups** auf **Edit** klicken.
 1. Die bestehende Security Group ``Workshop-ECS-Frontend-SG`` auswählen und auf **Save** klicken.
 1. Die Option **Auto-assign public IP** auf **ENABLED** stehen lassen.
-1. Im Abschnitt **Load balancing** die Option **Application Load Balancer** auswählen.
-1. Unter **Container to load balance** auf **Add to load balancer** klicken.
+14. Im Abschnitt **Load balancing** die Option **Application Load Balancer** auswählen und den bereits erstellten ALB ``todoApp``.
 1. Unter **Production listener port** im Dropdown ``80:HTTP`` auswählen.
 1. Bei **Target group name** im Dropdown ``workshop-frontend``auswählen und auf **Next step** klicken.
 1. Im Schritt 3 **Set Auto Scaling (optional)** auf **Do not adjust** 
@@ -112,6 +111,11 @@ Teste nun die Funktionalitäten deiner ToDo-Anwendung:
 - **Prüfen der gelöschten Aufgaben**: Rufe wieder den erweiterten Link auf und prüfe, ob nun die Liste an Aufgaben kürzer geworden ist.
 
 ![Todos Daten](/images/todos_daten.png)
+
+<video width=100% controls autoplay loop>
+    <source src="/images/ToDoApp.mp4" type="video/mp4">
+    Your browser does not support the video tag.  
+</video>
 
 
 #### Hochverfügbarkeit der Datenbank konfigurieren

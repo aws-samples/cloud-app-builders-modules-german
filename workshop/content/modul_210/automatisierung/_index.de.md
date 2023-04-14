@@ -127,12 +127,12 @@ Im Folgenden wirst du eine CloudFormation Vorlage ausführen. Da manche Teile de
 
 1. Unter Services den Dienst **S3** auswählen.
 1. Klicke auf **Create bucket**, um einen neuen Bucket zu erstellen.
-1. Gebe deinem Bucket einen weltweit einzigartigen Namen.
+1. Gebe deinem Bucket einen weltweit einzigartigen Namen, der mit ``cloudformation`` beginnen soll.
 1. Klicke auf **Create bucket**.
 1. Kopiere den Namen des Buckets. Diesen wirst du im nächsten Schritt benötigen.
 1. Öffne deinen Bucket und erstelle einen Ordner mit dem Namen ``Vorlage``.
 1. Öffne in einem neuen Tab den Dienst **Cloud9** und öffne dort wieder deine Umgebung **Uek Umgebung**.
-1. Gehe in den Ordner **src/cloudformation/assets** durch ``cd src/cloudformation/assets``.
+1. Gehe in den Ordner **cloudformation/assets** durch ``cd cloud-app-builders-modules-german/src/cloudformation/assets``.
 1. Kopiere nun alle Dateien aus diesem Ordner in deinen Bucket. Ersetze DEIN_BUCKET durch den Namen deines erstellten Buckets. Sync wird genutzt, damit alle Dateien auf diesem Ordner kopiert werden.
 
 ```
@@ -141,10 +141,11 @@ aws s3 sync . s3://DEIN_BUCKET
 
 #### Bereitstellung der Vorlage
 1. Bleibe in **Cloud9** und gehe in den Ordner **src/cloudformation**.
-2. Kopiere nun **cloudFormationToDo.yml** in deinen Bucket in den Ordner **Vorlage**. Ersetze wieder DEIN_BUCKET durch den Namen deines erstellten Buckets.
+2. Kopiere nun **cloudFormationToDo.yml** in deinen Bucket, der mit ``cloudformation`` beginnt, in den Ordner **Vorlage**. Ersetze wieder DEIN_BUCKET durch den Namen deines erstellten Buckets.
 ```
-aws s3 cp cloudFormationToDo.yml s3://DEIN_BUCKET/Vorlage
+aws s3 cp cloudFormationToDo.yml s3://DEIN_BUCKET/Vorlage/
 ```
+3. Öffne in einem neuen Tab deinen S3 Bucket und prüfe, ob im Ordner Vorlage die yml-Datei kopiert wurde.
 
 #### Ausführung der Vorlage
 1. Wähle unter Services den Dienst **S3** und gehe zu deinem Bucket in den Ordner **Vorlage**.
@@ -153,7 +154,7 @@ aws s3 cp cloudFormationToDo.yml s3://DEIN_BUCKET/Vorlage
 1. Klicke auf **Create stack** und wähle **with new resources (standard)** aus.
 1. Lege deine Vorlage fest, indem du **Amazon S3 URL** auswählst. Gib nun die kopiere URL ein und klicke auf **Next**.
 1. Benenne den Stack `ToDoStack`.
-1. Fülle die Parameter wie folgt aus:
+1. Fülle die Parameter wie folgt aus (siehe das nächste Bild):
     1. Für **URIbackend** füge die URI von deinem Container Image in Amazon ECR aus dem **[Amazon ECS](https://docs.aws.amazon.com/de_de/AmazonECS/latest/developerguide/Welcome.html)** integriert werden, der bisher [Container Image Kapitel]({{< ref "/modul_210/container" >}} "Container Image Kapitel") ein. Unter Services den Dienst **Elastic Container Registry** in einem neuen Browser Fenster öffnen. In der Liste der Private Repositories auf das repository mit dem Namen workshop-backend klicken. In der Liste der Images auf **Copy URI** klicken, um die URI vom backend container image zu kopieren und dann in dem anderen Browser Fenster mit den CloudFormation Parametern einfügen.
     2. Tippe in das Textfeld vom Parameter **pwDatabase** ein Passwort für die Datenbank, zum Beispiel ``todopassword``.
     3. Füge den Namen des Amazon S3-Buckets ein, den du zuvor erstellt hast, um die benötigten Dateien für CloudFormation bereitzustellen für **s3AssetBucketName**.
@@ -162,15 +163,23 @@ aws s3 cp cloudFormationToDo.yml s3://DEIN_BUCKET/Vorlage
 1. Danach klicke auf **Submit**, um deinen Stack auszuführen und deine Architektur automatisch erstellen zu lassen.
 1. Klicke auf das Tab **Resources**, um zu sehen, welche Ressourcen für die Anwendung erstellt werden. Schaue dir die einzelnen Komponenten an und überlege, ob du diese bereits aus vorherigen Kapiteln kennst. 
 
+![Parameter für CloudFormation](/images/parameter_cloudformation.png)
+
 {{% notice note %}}
 Es kann bis zu 30 Minuten dauern, bis die **CloudFormation Vorlage** ausgeführt ist. Währenddessen werden immer Services verfügbar sein, die bereits erstellt wurden, sodass du dir diese unter **Resources** in deinem Stack anschauen kannst.
 {{% /notice %}}
 
 #### Finale Schritte
-Wie vorher erwähnt brauchst du noch ein paar Dateien, sogenannte **Assets**, für das Frontend.
+Es fehlt noch das Frontend:
 1. Die Vorlage hat einen neuen Bucket erstellt. Du kannst den Bucket in **S3** finden und sein Name beginnt mit `todostack`.
-1. Lade aus dem Ordner **todo-frontend/build** alle Dateien hoch.
-1. Nun hast du alle notwendigen Dateien für die gerade erstellte Infrastruktur.
+1. Öffne in einem neuen Tab den Dienst **Cloud9** und öffne dort wieder deine Umgebung **Uek Umgebung**.
+1. Gehe in den Ordner **todo-frontend** durch ``cd cloud-app-builders-modules-german/src/todo-frontend/build``.
+1. Kopiere nun alle Dateien aus diesem Ordner in deinen Bucket. Ersetze DEIN_BUCKET durch den Namen des erstellten Buckets beginnend mit `todostack`. Sync wird genutzt, damit alle Dateien auf diesem Ordner kopiert werden. 
+
+```
+aws s3 sync . s3://DEIN_BUCKET
+```
+
 
 #### Test der ToDo-Liste
 Die Vorlage hat die gleiche ToDo-App auf Containern nochmal nachgebaut, sodass du diese auch nochmal testen kannst.

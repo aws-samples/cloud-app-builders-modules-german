@@ -1,5 +1,7 @@
 /*jshint esversion: 8 */
 //const aws = require('aws-sdk');
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
 const { DynamoDBDocumentClient, PutCommand,DeleteCommand, QueryCommand } = require("@aws-sdk/lib-dynamodb");
 const client = new DynamoDBClient();
@@ -30,7 +32,9 @@ function parseTodoBody(event) {
     return JSON.parse(todoString);
 }
 
-exports.handler = async (event) => {
+export const handler = async (event) => {
+    console.log("Event");
+    console.log(event);
     const method = event.requestContext.httpMethod;
 
     if (method === 'GET') {
@@ -82,6 +86,7 @@ const patchTodo = async function (id, todo) {
     };
     const command = new PutCommand(params);
     const result = await doc.send(command);
+    console.log(result);
     return done(200, { "message": "Item with id " + id + " updated" });
 };
 
@@ -110,11 +115,15 @@ const getTodos = async function (id) {
     
     const command = new QueryCommand(params);
     const data = await doc.send(command);
+    console.log("query results");
+    console.log(data);
     return done(200, data.Items);
 
 };
 
 const saveTodo = async function (todo) {
+    console.log("Saving TODO");
+    console.log(todo);
     const params = {
         TableName: process.env.TABLE,
         Item: todo
@@ -122,5 +131,6 @@ const saveTodo = async function (todo) {
 
     const command = new PutCommand(params);
     const result = await doc.send(command);
+    console.log(result);
     return done(200, todo);
 };
