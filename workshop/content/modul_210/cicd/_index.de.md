@@ -103,7 +103,51 @@ Im nächsten Schritt kann die Pipeline erstellt werden, die den Source Code vera
 1. Bei **Cluster name** das vorher gestellte Amazon ECS Cluster `workshop-cluster` auswählen.
 1. Bei **Service name** den Backend Service `backend-service` auswählen.
 1. Auf **Next** klicken.
-1. Klick **Create pipeline**. Der Build Prozess startet automatisch das erste Mal.
+1. Klick **Create pipeline**. Der Build Prozess startet automatisch das erste Mal. Der erste Build Prozess wird fehlschalgen, das wirst du im nächsten Abschnitt beheben.
+
+#### AWS CodeBuild Project Permissions
+
+Die erste Ausführung von dem Build Prozess ist fehlgeschlagen. Das liegt daran, dass die Build Stage nicht aussreichende Berechtigungen hat. In diesem Abschnitt wirst du die fehlenden Permissions vergeben.
+
+1. Unter **Services**, den Dienst **IAM** auswählen.
+1. Bei **Policies** auf **Create policy** klicken.
+1. Navigiere zu dem **JSON** Editor.
+1. Kopiere folgende Policy in den JSON Editor.
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ecr:CompleteLayerUpload",
+                "ecr:UploadLayerPart",
+                "ecr:InitiateLayerUpload",
+                "ecr:BatchCheckLayerAvailability",
+                "ecr:PutImage"
+            ],
+            "Resource": "arn:aws:ecr:us-east-1 :<YOUR_AWS_ACCOUNT_ID>:repository/workshop-backend"
+        },
+        {
+            "Effect": "Allow",
+            "Action": "ecr:GetAuthorizationToken",
+            "Resource": "*"
+        }
+    ]
+}
+```
+2. Im JSON Editor überschreibe **<YOUR_AWS_ACCOUNT_ID>** - mit der ID von deinem AWS-Account (im AWS Console **User-Menu** sichtbar) - z.b. `112233445566`
+3. **Next: Tags** klicken.
+4. **Next: Review** klicken.
+5. Gebe der Policy den Namen `CodeBuildECRAccess`.
+6. Erstelle die Policy mit **Create policy**
+7. Suche nach deiner neu erstellten **CodeBuildECRAccess** Policy und wähle die Policy in der Liste.
+8. Klicke auf **Actions** und als nächstes auf **Attach**.
+9. Suche in der Liste nach der IAM Rolle von deinem CodeBuild Projekt. Der Name nach dem du suchst sollte `codebuild-TodosAppBackendService-service-role` sein. Wähle die Rolle aus.
+10. Gebe die Rolle die Permissions auf ECR zuzugreifen, indem du **Attach policy** klickst.
+
+Jetzt sollte der Build Prozess funktionieren.
+
 
 #### Veröffentlichung einer Änderung 
 In diesem Schritt wird eine Änderung im CodeCommit Repository vorgenommen. Dieser wird danach automatisch über die CI/CD Pipeline veröffentlicht.
