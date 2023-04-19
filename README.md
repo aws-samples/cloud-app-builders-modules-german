@@ -18,8 +18,12 @@ Modul 210 behandelt verschiedene Implementierungsmöglichkeiten einer ToDo-Appli
 Das Modul basiert auf dieser [Modulbeschreibung](https://www.modulbaukasten.ch/module/210/1/de-DE?title=Public-Cloud-f%C3%BCr-Anwendungen-nutzen).
 
 ### Ziel der Module
-Am Ende Module wird eine funktionsfähige ToDo-Applikation erstellt, die so aussehen kann:
-https://raw.githubusercontent.com/aws-samples/cloud-app-builders-modules-german/main/workshop/static/images/ToDoApp.mp4
+Am Ende Module wird eine funktionsfähige ToDo-Applikation erstellt, die so aussehen kann:=
+
+https://user-images.githubusercontent.com/108731267/233037964-e3647106-238b-4a4a-94a9-fbe7599e80d7.mp4
+
+
+
 
 ### Voraussetzungen für die Kurse
 Die Module sollen auf AWS Academy durchgeführt werden. Es ist möglich diese auch in einem eignen Cloud-Account der AWS Cloud durchzuführen, aber es führt zu leichten Abweichungen in der Anleitung z.B. Nutzung von anderen Rollen.
