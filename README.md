@@ -20,7 +20,7 @@ Das Modul basiert auf dieser [Modulbeschreibung](https://www.modulbaukasten.ch/m
 ### Ziel der Module
 Am Ende Module wird eine funktionsfähige ToDo-Applikation erstellt, die so aussehen kann:
 <video width=100% controls autoplay loop>
-    <source src="/images/ToDoApp.mp4" type="video/mp4">
+    <source src="/workshop/static/images/ToDoApp.mp4" type="video/mp4">
     Your browser does not support the video tag.  
 </video>
 
