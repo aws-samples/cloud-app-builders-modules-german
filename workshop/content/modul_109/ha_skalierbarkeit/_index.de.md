@@ -15,7 +15,7 @@ pre = "<b>6. </b>"
     - [Service Konfiguration der Backend Container](#service-konfiguration-der-backend-container) 
     - [Service Konfiguration der Frontend Container](#service-konfiguration-der-frontend-container)
     - [Test der ToDo-Liste](#test-der-todo-liste)
-    - [Hochverfügbarkeit der Datenbank konfigurieren](#hochverfügbarkeit-der-datenbank-konfigurieren)
+    - [Failover der Datenbank testen](#failover-der-datenbank-testen)
 - [Zusammenfassung und nächste Schritte](#zusammenfassung-und-nächste-schritte)
 
 {{% include "alb/alb_intro.de.md" %}}
@@ -72,7 +72,7 @@ Mit dieser Konfiguration leitet der Load Balancer nun alle Anfragen an die Targe
 1. In der Übersicht klick auf ``workshop-cluster``.
 1. Im Tab **Services** auf **Create** klicken.
 1. Als **Launch type** muss **Fargate** ausgewählt werden.
-1. Bei **Task Definition** muss ``workshop-frontend`` ausgewählt werden.
+1. Bei **Family** muss ``workshop-frontend`` ausgewählt werden.
 1. Als **Service name** ``frontend-service`` eingeben.
 1. Unter **Number of tasks** ``2`` eingeben.
 1. Klick auf **Next step**.
@@ -81,13 +81,10 @@ Mit dieser Konfiguration leitet der Load Balancer nun alle Anfragen an die Targe
 1. Bei **Security groups** auf **Edit** klicken.
 1. Die bestehende Security Group ``Workshop-ECS-Frontend-SG`` auswählen und auf **Save** klicken.
 1. Die Option **Auto-assign public IP** auf **ENABLED** stehen lassen.
-1. Im Abschnitt **Load balancing** die Option **Application Load Balancer** auswählen.
-1. Unter **Container to load balance** auf **Add to load balancer** klicken.
+14. Im Abschnitt **Load balancing** die Option **Application Load Balancer** auswählen und den bereits erstellten ALB ``todoApp``.
 1. Unter **Production listener port** im Dropdown ``80:HTTP`` auswählen.
 1. Bei **Target group name** im Dropdown ``workshop-frontend``auswählen und auf **Next step** klicken.
-1. Im Schritt 3 **Set Auto Scaling (optional)** auf **Do not adjust** 
-1. **Next step** klicken.
-1. In der Übersicht klick auf **Create Service** und im darauffolgenden Statusfenster auf **View Service**.
+1. **Create** klicken.
 
 #### Test der ToDo-Liste
 
@@ -113,26 +110,14 @@ Teste nun die Funktionalitäten deiner ToDo-Anwendung:
 
 ![Todos Daten](/images/todos_daten.png)
 
-
-#### Hochverfügbarkeit der Datenbank konfigurieren
-**Aufgabe:**
-Modifiziere die Amazon RDS Datenbank workshop-db. Es soll eine neue Standby Instanz kreiert werden. Deine Änderung soll sofort erfolgen. Durch diese Anpassung wird die Datenbank hochverfügbar, da die beiden Instanzen in verschiedenen Availability Zone laufen.
-
-{{%expand "Lösung" %}}
-1. Unter **Services** den Dienst **RDS** auswählen.
-2. In der Übersicht links unter **Databases** die Liste deiner Datenbanken öffnen.
-3. Die Details der Datenbank Instanz mit klick auf ``workshop-db`` öffnen.
-4. Klick auf **Modify** um die Einstellungen zu ändern.
-5. Im Abschnitt **Availability & durability** die Option **Create a standby instance (recommended for production usage)** auswählen.
-6. Klick auf **Continue**.
-7. Im Abschnitt **Scheduling of modifications** die Option **Apply immediately** auswählen und mit Klick auf **Modify DB instance** die Änderung durchführen.
-8. In der Übersicht der DB Instanzen wird der **Status** angezeigt. Warte bis der Status auf **Available** wechselt.
-
-{{% /expand%}}
+<video width=100% controls autoplay loop>
+    <source src="/images/ToDoApp.mp4" type="video/mp4">
+    Your browser does not support the video tag.  
+</video>
 
 
 {{% notice note %}}
-Die Modifikation der Amazon RDS Instanz nimmt etwas Zeit in Anspruch. Im Hintergrund wird nun eine weitere Instanz in Betrieb genommen (Aktiv / Passiv) und die Datenbank wird automatisch repliziert. Mit dem [Multi-AZ Deployment](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.MultiAZ.html) läuft die Datenbank nach einem kurzen Unterbruch in einer anderen Availability Zone weiter. Der Datenbank Endpunkt für die Applikation (Amazon RDS Endpoint) bleibt dabei identisch. Somit muss die Anwendung nicht umkonfiguriert werden.
+Die Amazon RDS Instanz hat bereits im Hintergrund eine passive, weitere Instanz, auf die Daten automatisch repliziert werden. Mit dem [Multi-AZ Deployment](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.MultiAZ.html) läuft die Datenbank nach einem kurzen Unterbruch in einer anderen Availability Zone weiter, wenn es ein Failover gibt. Der Datenbank Endpunkt für die Applikation (Amazon RDS Endpoint) bleibt dabei identisch. Somit muss die Anwendung nicht umkonfiguriert werden.
 {{% /notice%}}
 
 #### Failover der Datenbank testen

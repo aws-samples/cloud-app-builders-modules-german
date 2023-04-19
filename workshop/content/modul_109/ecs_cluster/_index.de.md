@@ -187,12 +187,12 @@ In der **[Dokumentation](https://docs.aws.amazon.com/de_de/AmazonECS/latest/deve
 
 {{%expand "Lösung" %}}
 1. Unter Services den Dienst **Elastic Container Service** auswählen.
-2. Im Bereich Amazon ECS -  auf **Clusters** danach auf **Create Cluster** klicken.
-3. Im ersten Schritt als Template **Networking only** auswählen und **Next step** klicken.
-4. Als **Cluster name** ``workshop-cluster`` eingeben.
-5. Bei CloudWatch Container Insights die Option **Enable Container Insights** auswählen.
-6. Klick auf **Create**.
-7. Klick auf **View Cluster**.
+1. Im Bereich Amazon ECS -  auf **Clusters** danach auf **Create Cluster** klicken.
+1. Als **Cluster name** ``workshop-cluster`` eingeben.
+1. Unter Networking **workshop-VPC** auswählen und die Subnetze **Workshop-PublicA** und **Workshop-PublicB**.
+1. Bei CloudWatch Container Insights die Option **Enable Container Insights** auswählen.
+1. Klick auf **Create**.
+1. Klick auf **View Cluster**.
 {{% /expand%}}
 <!-- Fix this with shortcodes -->
 <div class="notices note">
@@ -221,22 +221,20 @@ Beim ersten Versuch den Amazon ECS Cluster zu erstellen kann es ggf. zu einer Fe
 
 1. Klick auf **Task Definition**.
 2. In der Übersicht die ``workshop-frontend`` Task Definition auswählen.
-3. Unter **Actions** auf **Run Task** klicken.
-4. Als Launch Type **Fargate** wählen.
-5. Unter Cluster VPC das **Workshop-VPC** auswählen.
+3. Unter **Deploy** auf **Run Task** klicken.
+4. Als Cluster **workshop-cluster** auswählen.
+5. Unter Networking das **Workshop-VPC** auswählen.
 6. Als Subnet das **Workshop-PublicA** auswählen.
-7. Bei Security groups auf **Edit** klicken.
-8. Bei Assigned security groups **Select existing security group** auswählen.
-9. Unter Existing security groups die `Workshop-ECS-Task-SG` auswählen und auf **Save** klicken.
-10. Sicherstellen, dass bei Auto-assign public IP auf **Enabled** ausgewählt ist.
-11. Klick auf **Run Task**.
+7. Bei Security groups **Workshop-ECS-Task-SG** auswählen.
+8. Stelle sicher, dass bei Auto-assign public IP auf **Enabled** ausgewählt ist.
+9. Klick auf **Run Task**.
 
 {{% notice note %}}
 In der Übersicht wird auch der Status des Containers angezeigt. Die Spalten **Last status** und **Desired status** geben den aktuellen sowie den Ziel-Status an. Während des Starts des Containers werden die Phasen **Pending** und **Provisioning** durchlaufen. Der Container muss zuerst von aus dem Container Repository heruntergeladen werden. Dieser Prozess kann eine kurze Zeit dauern.
 {{% /notice%}}
 
 **Aufgabe:**
-Greife auf das Frontend durch die Public IP unter dem Port 8080 des Containers zu, indem du die IP in einem neuen Tab öffnest und den Port hinzufügst. Jetzt ist das Frontend der ToDo-App zusehen.
+Greife auf das Frontend durch die **Public IP** unter dem **Port 8080** des Containers zu, indem du die IP in einem neuen Tab öffnest und den Port hinzufügst. Jetzt ist das Frontend der ToDo-App zusehen.
 ```bash
 http://<yourContainerIP>:8080
 ```

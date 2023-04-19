@@ -51,28 +51,48 @@ wird im nächsten Schritt ein manuelles Backup erstellt, welches dann für die W
 
 #### Point in time Backup erstellen
 
-1. Zunächst einmal musst du in deiner Todo-Liste ein paar Einträge erstellen. Erinnerst du dich noch wie du deine Todo-Applikation öffnen kannst? Im Abschnitt [Test der Beispielanwendung]({{< ref "/modul_109/ha_skalierbarkeit#test-der-beispielanwendung" >}} "Test der Beispielanwendung") wurde beschrieben wie du die URL für deine Applikation findest.
+1. Zunächst einmal musst du in deiner Todo-Liste ein paar Einträge erstellen. Erinnerst du dich noch wie du deine Todo-Applikation öffnen kannst? Im Abschnitt [Test der Beispielanwendung]({{< ref "/modul_109/ha_skalierbarkeit#test-der-beispielanwendung" >}} "Test der Beispielanwendung") wurde beschrieben wie du die URL für deine Applikation findest. Schreibe zum Beispiel **5 ToDos** in deine Liste.
 2. Danach unter **Services** den Dienst **RDS** auswählen.
 3. Links im Menü auf **Databases** klicken.
 4. Die Datenbank ``workshop-db`` auswählen und über **Actions** auf **Take snapshot** klicken.
 5. Unter **Snapshot name** den Wert ``ondemandbackup`` eingeben.
-6. Nachdem der manuelle Snapshot erstellt wurde (die Erstellung des Snapshots kann im Feld **Status** überwacht werden) 
-können in der Beispielanwendung beliebige Einträge gelöscht werden.
+6. Warte bis der manuelle Snapshot erstellt wurde (die Erstellung des Snapshots kann im Feld **Status** überwacht werden) 
+7. **Lösche alle ToDos** aus deiner Liste.
 
 #### Restore
 1. Unter **Services** den Dienst **RDS** auswählen.
 2. Links im Menü auf **Databases** klicken und danach auf die Datenbank ``workshop-db`` klicken.
 3. Im Abschnitt **Maintenance & backup** unter **Snapshots** den ``ondemandbackup`` auswählen und auf **Restore** klicken.
-4. Im Abschnitt **Settings** bei **DB Instance Identifier** den Wert ``workshop-db-restore`` eingeben. Die restlichen Einstelllungen bleiben unverändert.
-5. Klick auf **Restore DB Instance**.
+4. Unter **Availability and durability** die Option ``Multi-AZ DB instance`` auswählen.
+5. Im Abschnitt **Settings** bei **DB Instance Identifier** den Wert ``workshop-db-restore`` eingeben.
+6. Wähle als **VPC security group** ``Workshop-RDS-SG``. Wähle die ``default`` Security group ab.
+7. Unter **DB instance class** auf **Burstable classes (includes t classes)** wechseln und dort den Typ ``db.t3.micro`` auswählen.
+8. Die restlichen Einstellungen bleiben gleich.
+9. Klick auf **Restore DB Instance**. Nun wird eine neue DB Instanz erstellt basierend auf dem Snapshot. Das kann einige Zeit in Anspruch nehmen. 
 
 {{% notice note %}}
 Die Wiederherstellung der Datenbank von einem Snapshot hat immer zu Folge, dass eine neue DB Instanz erstellt wird. 
 Aus Sicherheitsgründen ist es nicht möglich, [eine bestehende Instanz zu überschreiben](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_RestoreFromSnapshot.html). 
-Nach dem Restore gibt es verschiedene Möglichkeiten. Entweder wird die wiederhergestellte Datenbank als produktive 
+Nach dem Restore gibt es verschiedene Möglichkeiten: Entweder wird die wiederhergestellte Datenbank als produktive 
 Instanz weiter verwendet und die Umgebungsvariablen in der Task Definition der Backend Container werden angepasst. 
 Oder die Daten werden über die DB Engine extrahiert und auf die originale Instanz kopiert (DB Dump & Restore).
 {{% /notice%}}
+
+Um zu testen, ob das Wiederherstellen geklappt hat durch den Snapshot, muss nun die neue Datenbank **ondemandbackup** genutzt werden.
+
+1. Kopiere von deiner neuen Datenbank den Endpoint (Endpunkt). Diesen findest du unter **Connectivity & security** in deiner Datenbank.
+1. Unter **Services** den Dienst **ECS** auswählen.
+1. Wähle bei **Task definitions** ``workshop-backend`` aus.
+1. Klicke auf **Create new revision**.
+1. Ändere unter **Environmental variables** den Wert für **DB_HOST** zu dem Endpunkt, den du gerade kopiert hast.
+1. Klick auf **Create**. Nun ist in der Task Definition festgelegt, dass Amazon ECS den Endpunkt der neuen Datenbank nutzen soll.
+1. Wähle bei **Clusters** das ``workshop-cluster`` aus.
+1. Unten bei Services wähle **backend-service** aus.
+1. Klicke auf **Update**.
+1. Unter **Revision** kannst du die aktuellste Version deiner Task Definition auswählen.
+1. Alle anderen Einstellungen bleiben gleich und du kannst auf **Update** klicken. Nun sorgt Amazon ECS dafür, dass neue Tasks ausgeführt werden. Zwischenzeitlich kann es davon vier Stück geben: zwei mit der alten Version und zwei mit der neuen.
+1. Sobald die neue Datenbank bereit ist und auch die neuen Tasks laufen, kannst du deine ToDo-Applikation aufrufen. Nun sollten deine alten fünf ToDos wieder da sein.
+
 
 ### Zusammenfassung und nächste Schritte
 In diesem Kapitel wurde AWS Backup eingeführt, um die Handhabung und das Erstellen von Backups für Datenbanken wie Amazon RDS zu vereinfachen. Danach wurde das Erstellen von einem Snapshot und die Wiederherstellung der Datenbank an einem Praxisbeispiel durchgeführt. Backups helfen die Anwendungen in der Cloud zuverlässiger zu machen und alte Zwischenstände bei Bedarf wieder herzustellen. 

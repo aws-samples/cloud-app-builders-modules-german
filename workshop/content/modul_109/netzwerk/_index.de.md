@@ -21,6 +21,8 @@ pre = "<b>2. </b>"
 {{% include "network_introduction.de.md" %}}
 
 ### Anwendung
+Der gesamte praktische Teil dieses Moduls wird in der Region ``us-east-1`` durchgeführt und sollte auch nicht während der Durchführung geändert werden.
+
 #### Erstellen einer neuen VPC
 **Aufgabe:**
 Erstelle eine eigene VPC ohne Subnetze mit dem Adressbereich ``172.100.0.0/16`` und nutze als Tag ``Name:Workshop-VPC``. Eine VPC ist immer an eine AWS Region gebunden.
@@ -138,7 +140,7 @@ Es ist eine Good Practice, eine neue Routing-Tabelle mit den entsprechenden Rege
 
 ##### Zuweisung der Subnetze
 **Aufgabe:**
-Weise nun die beiden Subnetze Workshop-PublicA und Workshop-PublicB der gerade erstellten Routing-Tabelle zu.
+Weise nun die beiden Subnetze ``Workshop-PublicA`` und ``Workshop-PublicB`` der gerade erstellten Routing-Tabelle zu.
 
 {{%expand "Hinweis" %}}
 In der **[Dokumentation](https://docs.aws.amazon.com/de_de/vpc/latest/userguide/WorkWithRouteTables.html#SubnetRouteTables)** sind einzelne Schritte beschrieben wie die erstellten Subnetze mit der Routing-Tabelle verbunden werden  .
