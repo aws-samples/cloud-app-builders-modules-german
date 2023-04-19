@@ -18,7 +18,7 @@ Modul 210 behandelt verschiedene Implementierungsmöglichkeiten einer ToDo-Appli
 Das Modul basiert auf dieser [Modulbeschreibung](https://www.modulbaukasten.ch/module/210/1/de-DE?title=Public-Cloud-f%C3%BCr-Anwendungen-nutzen).
 
 ### Ziel der Module
-Am Ende Module wird eine funktionsfähige ToDo-Applikation erstellt, die so aussehen kann:=
+Am Ende Module wird eine funktionsfähige ToDo-Applikation erstellt, die so aussehen kann:
 
 https://user-images.githubusercontent.com/108731267/233037964-e3647106-238b-4a4a-94a9-fbe7599e80d7.mp4
 
