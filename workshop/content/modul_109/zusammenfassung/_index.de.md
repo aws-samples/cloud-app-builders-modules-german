@@ -28,3 +28,9 @@ Weitere Informationen findest du unter diesem Link:
 In unserem **[AWS Blog](https://aws.amazon.com/blogs/aws/)** findest du Neuigkeiten zu unseren Services, Beispielanwendungen und Architekturen. Dadurch kannst du schnell neue Inspirationen für deine eigenen Projekte bekommen oder passende Anleitungen finden.
 
 **Viel Spaß bei deinen eigenen Implementierungen!**
+
+
+#### Feedback zu Modul 109
+Da wir versuchen unsere Inhalte stetig zu verbessern, würden wir dich bitten uns **[Feedback](https://pulse.buildon.aws/survey/6ZDVYKHY)** zu geben. Du kannst entweder den hinterlegten Link nutzen oder den QR-Code scannen. Wir freuen uns sehr über dein Feedback!
+
+![Survey Modul 109](/images/feedback_m109.png)
