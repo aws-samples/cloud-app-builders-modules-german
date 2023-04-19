@@ -19,7 +19,7 @@ Das Modul basiert auf dieser [Modulbeschreibung](https://www.modulbaukasten.ch/m
 
 ### Ziel der Module
 Am Ende Module wird eine funktionsfähige ToDo-Applikation erstellt, die so aussehen kann:
-workshop/static/images/ToDoApp.mp4
+![](workshop/static/images/ToDoApp.mp4)
 
 ### Voraussetzungen für die Kurse
 Die Module sollen auf AWS Academy durchgeführt werden. Es ist möglich diese auch in einem eignen Cloud-Account der AWS Cloud durchzuführen, aber es führt zu leichten Abweichungen in der Anleitung z.B. Nutzung von anderen Rollen.
