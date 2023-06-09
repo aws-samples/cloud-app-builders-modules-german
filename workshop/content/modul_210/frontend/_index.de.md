@@ -87,19 +87,20 @@ Der Zugriff auf das Frontend erfolgt über eine sog. **Cloudfront Distribution**
 (container / serverless). Darüber hinaus können Inhalte gecachet werden, was den Zugriff beschleunigt.
 
 1. Unter **Services** den Dienst **Cloudfront** auswählen.
-2. Auf **Create Distribution** klicken.
+2. Auf **Create a CloudFront distribution** klicken.
 3. Falls **Get Started** sichtbar ist, darauf klicken.
 4. Bei **Origin Domain Name**, das **S3 Bucket** von vorher auswählen.
 5. Bei **Origin Access**, `Origin access control settings` auswählen.
 6. Unter **Origin access control** `Create control setting` auswählen.
 7. Den Namen gleich lassen und auf **Create** klicken. Sign requests wird verwendet, damit die Anfragen signiert werden und somit der Zugriff auf die Daten im Amazon S3 Bucket geschützt ist.
-7. Im Abschnitt **Default cache behavior** bei **Viewer Protocol Policy**, wähle  **HTTPS Only** aus.
-7. Unter **Cache key and origin requests** wähle **Cache policy and orgin request policy** aus. Klicke bei **Cache Policy** auf `CachingDisabled`. Durch diese Einstellung werden deine Anfragen nicht gecachet, sodass du immer die neueste Version deiner ToDo-Liste bekommst, wenn du die Seite aufrufst.
-8. Im Abschnitt **Settings**, bei **Default Root Object**, `index.html` eingeben.
-9. Nach unten scrollen und auf **Create Distribution** klicken.
-10. Sobald die CloudFront Distribution erstellt wird, erscheint oben ein blauer Kasten mit dem Titel **S3 bucket policy needs to be updated**. Klicke auf **Copy policy**.
-11. Gehe zurück zu deinem erstellten Amazon S3 Bucket und unter dem Reiter Permissions findest du **Bucket policy**.
-12. Klicke auf **Edit** und kopiere die Policy hinein. Mit einem Klick auf **Save changes**, kann nun deine CloudFront distribution auf die Inhalte dieses Amazon S3 Buckets zurückgreifen.
+8. Im Abschnitt **Default cache behavior** bei **Viewer protocol policy**, wähle  **HTTPS only** aus.
+9. Unter **Cache key and origin requests** wähle **Cache policy and orgin request policy** aus. Klicke bei **Cache policy** auf `CachingDisabled`. Durch diese Einstellung werden deine Anfragen nicht gecachet, sodass du immer die neueste Version deiner ToDo-Liste bekommst, wenn du die Seite aufrufst.
+10. Bei **Web Application Firewall (WAF)** die Option `Do not enable security protections` auswählen.
+11. Im Abschnitt **Settings**, bei **Default root object**, `index.html` eingeben.
+12. Nach unten scrollen und auf **Create Distribution** klicken.
+13. Sobald die CloudFront Distribution erstellt wird, erscheint oben ein blauer Kasten mit dem Titel **S3 bucket policy needs to be updated**. Klicke auf **Copy policy**.
+14. Gehe zurück zu deinem erstellten Amazon S3 Bucket und unter dem Reiter Permissions findest du **Bucket policy**.
+15. Klicke auf **Edit** und kopiere die Policy hinein. Mit einem Klick auf **Save changes**, kann nun deine CloudFront distribution auf die Inhalte dieses Amazon S3 Buckets zurückgreifen.
 
 
 {{% notice note %}}

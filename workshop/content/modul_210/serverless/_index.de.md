@@ -70,11 +70,11 @@ DynamoDB verwendet. Diese wird in den folgenden Schritten konfiguriert und berei
 1. Unter **Services** den Dienst **DynamoDB** auswählen.
 1. Unter **Dashboard**, auf **Create table** klicken.
 1. Bei **Table name** `ServerlessTodoTable` eingeben.
-1. Bei **Primary key** `user_id` eingeben und als Typ `String` nutzen. 
-1. Sicherstellen, dass **Add sort key** ausgewählt ist, dannach `id` eingeben und als Typ `String` nutzen.
-1. Wàhle **Customize settings**.
-1. Bei **Read/write capacity mode** `On-Demand` auswählen.
-1. Die restlichen Einstllungen bleiben unverändert. Zum Abschluss auf **Create** klicken.
+1. Bei **Partition key** `user_id` eingeben und als Typ `String` nutzen. 
+1. Bei **Sort key - optional** `id` eingeben und als Typ `String` nutzen.
+1. Unter **Table settings** wähle **Customize settings**.
+1. Bei **Capacity mode** `On-demand` auswählen.
+1. Die restlichen Einstellungen bleiben unverändert. Zum Abschluss auf **Create table** klicken.
 
 
 #### Bereitstellung der Backend Logik
@@ -85,14 +85,14 @@ einzurichten sind die folgenden Schritte notwendig.
 1. Auf **Create function** klicken.
 1. Sicherstellen, dass **Author from scratch** ausgewählt ist. 
 1. Bei **Function name** `TodoServerlessApi` eingeben.
-1. Bei **Runtime** `Node.js 18.x` auswählen. Das ist die Javascript Laufzeit für das API. 
+1. Bei **Runtime** `Node.js 18.x` auswählen. Das ist die Javascript Laufzeitumgebung für das API. 
 1. Im Abschnitt **Change default execution role** `Use an existing role` auswählen.
 1. Bei **Role name** `LabRole` auswählen.
 1. Auf **Create function** klicken.
 
 Als nächstes kann der Sourcecode der Funktion hochgeladen werden.
 
-1. Im **[Repository HIER EINFÜGEN]()** die Javascript Datei unter `src/serverless-api/index.js` öffnen.
+1. Im Repository **[cloud-app-builders-module-german](https://github.com/aws-samples/cloud-app-builders-modules-german)** die Javascript Datei unter `src/serverless-api/index.js` öffnen.
 1. Den Inhalt der Datei `index.js` in die Zwischenablage kopieren und damit den **gesamten** Code der Lambda Funktion im Browser ersetzen.
 1. Zum Abschluss auf **Deploy** klicken.
 
@@ -119,15 +119,15 @@ besitzt. In diesem Schritt wird ein API Gateway aufgesetzt und konfiguriert, dam
 1. Bei **Lambda function**, die vorher erstellte Funktion `TodoServerlessApi` auswählen. 
 1. Rechts davon die `Version 1.0` auswählen.
 1. Bei **API name** `TodoServerlessApi` eingeben.
-1. Auf **next** klicken.
-1. Die Default Route muss entfernt werden.
+1. Auf **Next** klicken.
+1. Die Default Route muss entfernt werden. Klicke hierzu auf **Remove**.
 1. Die folgenden neuen Route anlegen, und für jede `TodoServerlessAPI` als Integration Target auswählen:
    1. **GET** `/api/v2/todos` - Zugriff auf alle ToDos
    1. **POST**, `/api/v2/todos` - Ein neues ToDo erstellen
    1. **PUT**, `/api/v2/todos/{todo+}` - Update eines ToDo über die ToDo-ID
    1. **DELETE**, `/api/v2/todos/{todo+}` - Löschen eines ToDo über die ToDo-ID
 1. Zwei Mal auf **Next** klicken.
-1. Auf **Create klicken**.
+1. Auf **Create** klicken.
 
 Nach der Bereitstellung ist das API Gateway über eine **Invoke URL** erreichbar. Schreib dir diese am besten auf. Sie sieht 
 ähnlich aus wie `https://abcdef.execute-api.eu-central-1.amazonaws.com`.
