@@ -169,7 +169,7 @@ In den folgenden Schritten wirst du ein Container Cluster erstellen. Das Cluster
 #### Erstellen des Container Clusters
 
 **Aufgabe:**
-Erstelle ein Container Cluster in Amazon Elastic Container Service (Amazon ECS) und benenne es ``workshop-cluster``. Nutze als Template Networking only und wähle Enable Container Insights aus, um mehr Einblicke später in das Cluster zu bekommen.
+Erstelle ein Container Cluster in Amazon Elastic Container Service (Amazon ECS) und benenne es ``workshop-cluster``. Nutze als Template Networking only und wähle Use Container Insights aus, um mehr Einblicke später in das Cluster zu bekommen.
 
 {{%expand "Hinweis" %}}
 In der **[Dokumentation](https://docs.aws.amazon.com/de_de/AmazonECS/latest/developerguide/create_cluster.html  )** sind die einzelnen Schritte zur Erstellung eines Cluster beschrieben.
@@ -180,7 +180,7 @@ In der **[Dokumentation](https://docs.aws.amazon.com/de_de/AmazonECS/latest/deve
 1. Im Bereich Amazon ECS -  auf **Clusters** danach auf **Create Cluster** klicken.
 1. Als **Cluster name** ``workshop-cluster`` eingeben.
 1. Unter Networking **workshop-VPC** auswählen und die Subnetze **Workshop-PublicA** und **Workshop-PublicB**.
-1. Bei CloudWatch Container Insights die Option **Enable Container Insights** auswählen.
+1. Unter Monitoring **Use Container Insights** aktivieren.
 1. Klick auf **Create**.
 1. Klick auf **View Cluster**.
 {{% /expand%}}
