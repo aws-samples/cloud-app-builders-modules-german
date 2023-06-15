@@ -84,7 +84,7 @@ einzurichten sind die folgenden Schritte notwendig.
 1. Unter **Services** den Dienst **Lambda** auswählen.
 1. Auf **Create function** klicken.
 1. Sicherstellen, dass **Author from scratch** ausgewählt ist. 
-1. Bei **Function name** `TodoServerlessFunction` eingeben.
+1. Bei **Function name** `TodoServerlessApi` eingeben.
 1. Bei **Runtime** `Node.js 18.x` auswählen. Das ist die Javascript Laufzeit für das API. 
 1. Im Abschnitt **Change default execution role** `Use an existing role` auswählen.
 1. Bei **Role name** `LabRole` auswählen.
@@ -116,12 +116,12 @@ besitzt. In diesem Schritt wird ein API Gateway aufgesetzt und konfiguriert, dam
 1. Im Abschnitt **HTTP API** auf **Build** klicken.
 1. Im Abschnitt **Integrations**, auf **Add integration** klicken.
 1. In der Liste **Lambda** auswählen.
-1. Bei **Lambda function**, die vorher erstellte Funktion `TodoServerlessFunction` auswählen. 
+1. Bei **Lambda function**, die vorher erstellte Funktion `TodoServerlessApi` auswählen. 
 1. Rechts davon die `Version 1.0` auswählen.
 1. Bei **API name** `TodoServerlessApi` eingeben.
 1. Auf **next** klicken.
 1. Die Default Route muss entfernt werden.
-1. Die folgenden neuen Route anlegen, und für jede `TodoServerlessFunction` als Integration Target auswählen:
+1. Die folgenden neuen Route anlegen, und für jede `TodoServerlessAPI` als Integration Target auswählen:
    1. **GET** `/api/v2/todos` - Zugriff auf alle ToDos
    1. **POST**, `/api/v2/todos` - Ein neues ToDo erstellen
    1. **PUT**, `/api/v2/todos/{todo+}` - Update eines ToDo über die ToDo-ID
