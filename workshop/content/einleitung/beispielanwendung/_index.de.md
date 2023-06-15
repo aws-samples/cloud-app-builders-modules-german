@@ -8,7 +8,7 @@ pre = "<b>7. </b>"
 ### Beispielanwendung für die ÜK Module
 Für die Durchführung der ÜK Module wird eine einfache Beispielanwendung eingesetzt. Hierbei handelt es sich um eine webbasierte ToDo-Liste. Sie basiert auf [ToDoMVC](https://todomvc.com/), welches Entwicklern den Vergleich und die Evaluation unterschiedlicher Frontend Frameworks ermöglicht. 
 
-<video width=100% controls autoplay loop>
+<video width=100% controls autoplay loop muted>
     <source src="/images/ToDoApp.mp4" type="video/mp4">
     Your browser does not support the video tag.  
 </video>
