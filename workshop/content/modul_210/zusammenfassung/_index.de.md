@@ -1,8 +1,8 @@
 +++
 title = "Zusammenfassung"
 chapter = false
-weight = 110
-pre = "<b>11. </b>"
+weight = 120
+pre = "<b>12. </b>"
 +++
 In diesem Modul wurden zwei grosse Themengebiete behandelt:
 
