@@ -2,7 +2,7 @@
 title = "Zusammenfassung"
 chapter = false
 weight = 30
-pre = "<b>9. </b>"
+pre = "<b>10. </b>"
 +++
 In diesem Modul wurden zwei grosse Themengebiete behandelt:
 
