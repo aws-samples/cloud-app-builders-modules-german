@@ -16,7 +16,7 @@ pygmentsStyle = "monokai"
 
 [params]
   description = "Cloud - ÜK Module"
-  author = "Amazon AWS"
+  author = "Amazon Web Services"
   disableBreadcrumb = false
   disableNextPrev = false
   themeVariant = "blue"
