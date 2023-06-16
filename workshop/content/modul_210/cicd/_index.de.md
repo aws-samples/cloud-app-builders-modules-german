@@ -143,7 +143,7 @@ Die erste Ausführung von dem Build Prozess ist fehlgeschlagen. Das liegt daran,
 6. Erstelle die Policy mit **Create policy**
 7. Suche nach deiner neu erstellten **CodeBuildECRAccess** Policy und wähle die Policy in der Liste.
 8. Klicke auf **Actions** und als nächstes auf **Attach**.
-9. Suche in der Liste nach der IAM Rolle von deinem CodeBuild Projekt. Der Name nach dem du suchst sollte `codebuild-TodosAppBackendService-service-role` sein. Wähle die Rolle aus.
+9. Suche in der Liste nach der IAM Rolle von deinem CodeBuild Projekt. Der Name, nach dem du suchst, sollte `codebuild-TodosAppBackendService-service-role` sein. Wähle die Rolle aus.
 10. Gebe die Rolle die Permissions auf ECR zuzugreifen, indem du **Attach policy** klickst.
 
 Jetzt sollte der Build Prozess funktionieren.

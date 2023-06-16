@@ -205,13 +205,13 @@ Beim ersten Versuch den Amazon ECS Cluster zu erstellen kann es ggf. zu einer Fe
 
 ##### Vorgehen für Backend Container:
 
-{{% includereplace "ecs_task_definition.de.md" "servicename" "backend" %}}
+{{% includereplace "ecs_task_definition.de.md" "servicename:backend" %}}
 
 {{% include "ecs_backend_env_setup.de.md" %}}
 
 ##### Vorgehen für Frontend Container:
 
-{{% includereplace "ecs_task_definition.de.md" "servicename" "frontend" %}}
+{{% includereplace "ecs_task_definition.de.md" "servicename:frontend" %}}
 
 {{% include "ecs_frontend_env_setup.de.md" %}}
 

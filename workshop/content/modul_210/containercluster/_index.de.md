@@ -193,13 +193,14 @@ Beim ersten Versuch ein Amazon ECS Cluster zu erstellen kann es ggf. zu einer Fe
 
 #### Erstellen der Task Definition 
 
-{{% includereplace "ecs_task_definition.de.md" "servicename" "backend" %}}
+{{% includereplace "ecs_task_definition.de.md" "servicename:backend" %}}
 
 {{% include "ecs_backend_env_setup.de.md" %}}
 
 #### Service Konfiguration Backend Container
 
-{{% include "ecs_cluster_backend_service.de.md" %}}
+{{% includereplace "ecs_cluster_service.de.md" "servicename:backend" "security-group-name:Workshop-ECS-Backend-SG" %}}
+
 
 ### Zusammenfassung und nächste Schritte 
 Herzlichen Glückwunsch! Du hast erfolgreich das Backend für deine Anwendung durch Amazon ECS implementiert und dadurch hochverfügbar gemacht. Nun können zwei Container im Hintergrund laufen, um die Anwendung zu unterstützen. Diese sind durch den Load Balancer auf zwei Availability Zones verteilt. Im nächsten Schritt wird nun das Frontend aufgesetzt. Das Frontend wird dann über den Load Balancer auf das Backend zugreifen und das Backend API auf die ToDos in der Datenbank zugreifen.
