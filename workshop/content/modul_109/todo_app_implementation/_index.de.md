@@ -65,26 +65,12 @@ Mit dieser Konfiguration leitet der Load Balancer nun alle Anfragen an die Targe
 {{% /notice%}}
 
 #### Service Konfiguration der Backend Container
-{{% include "ecs_cluster_backend_service.de.md" %}}
+{{% includereplace "ecs_cluster_service.de.md" "servicename:backend" "security-group-name:Workshop-ECS-Backend-SG" %}}
+
 
 #### Service Konfiguration der Frontend Container
-1. Unter Services den Dienst **Elastic Container Service** auswählen.
-1. In der Übersicht klick auf ``workshop-cluster``.
-1. Im Tab **Services** auf **Create** klicken.
-1. Als **Launch type** muss **Fargate** ausgewählt werden.
-1. Bei **Family** muss ``workshop-frontend`` ausgewählt werden.
-1. Als **Service name** ``frontend-service`` eingeben.
-1. Unter **Number of tasks** ``2`` eingeben.
-1. Klick auf **Next step**.
-1. Als **Cluster VPC** wird das ``Workshop-VPC`` ausgewählt.
-1. Unter **Subnets** nacheinander die Subnets ``Workshop-PublicA`` und ``Workshop-PublicB`` auswählen.
-1. Bei **Security groups** auf **Edit** klicken.
-1. Die bestehende Security Group ``Workshop-ECS-Frontend-SG`` auswählen und auf **Save** klicken.
-1. Die Option **Auto-assign public IP** auf **ENABLED** stehen lassen.
-14. Im Abschnitt **Load balancing** die Option **Application Load Balancer** auswählen und den bereits erstellten ALB ``todoApp``.
-1. Unter **Production listener port** im Dropdown ``80:HTTP`` auswählen.
-1. Bei **Target group name** im Dropdown ``workshop-frontend``auswählen und auf **Next step** klicken.
-1. **Create** klicken.
+{{% includereplace "ecs_cluster_service.de.md" "servicename:frontend" "security-group-name:Workshop-ECS-Frontend-SG" %}}
+
 
 #### Test der ToDo-Liste
 
