@@ -1,5 +1,10 @@
 {{$file := printf "%s/%s" "content/shared/" (.Get 0)}}
-{{$old := .Get 1}}
-{{$new := .Get 2}}
-{{$replaced := replace (readFile $file) $old $new}}
-{{ $replaced | markdownify }}
+{{ $content := newScratch }}
+{{ $content.Set "text" (readFile $file) }}
+{{ range after 1 .Params }}
+    {{ $arg := split . ":" }}
+    {{ $old := index $arg 0 }}
+    {{ $new := index $arg 1 }}
+    {{ $content.Set "text" (replace ($content.Get "text") $old $new)}}
+{{ end }}
+{{ $content.Get "text" | markdownify }}
