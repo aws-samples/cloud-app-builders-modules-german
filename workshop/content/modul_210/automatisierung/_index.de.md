@@ -201,11 +201,19 @@ Wenn du die serverlose Infrastruktur auch nutzen willst, kannst du diese wieder 
 #### Clean up
 Nun hast du die Vorlage der Infrastruktur für deine ToDo-App erfolgreich ausgeführt. Da nicht alle Ressourcen und Anwendungen in der Cloud dauerhaft gebraucht werden, lässt sich auch diese Infrastruktur leicht deprovisionieren.
 1. Unter Services den Dienst **CloudFormation** auswählen.
-2. Wähle deinen ToDo-App Stack aus. 
+2. Wähle deinen `ToDoStack` Stack aus. 
 3. Klicke oben rechts auf **Delete**. 
 4. Bestätige, dass du den Stack löschen möchtest.
 
 Nun wird deine ToDo-App wieder gelöscht. 
+
+Lösche zudem den S3 Bucket, in dem die CloudFormation Vorlage gespeichert ist.
+1. Unter Services den Dienst **S3** auswählen.
+2. In der Buckets Liste nach dem Namen `cloudformation-{yourname}` von deinem S3 Bucket suchen.
+3. Wähle deinen S3 Bucket in der Liste aus und klicke auf **Empty**.
+4. Gebe `permanently delete` in das Textfeld ein und klicke **Empty**. Dadurch werden all Objekte in dem Bucket gelöscht.
+5. Wähle deinen S3 Bucket in der Liste erneut aus und klicke auf **Delete**.
+6. Gebe den Namen von deinem S3 Bucket in das Textfeld und klicke auf **Delete bucket**. Nun wurde der S3 Bucket gelöscht.
 
 ### Zusammenfassung und nächste Schritte
 Herzlichen Glückwunsch! Du hast erfolgreich deine ToDo-App als Infrastuktur-as-Code aufgesetzt und ausgeführt. Durch diese Art ganze Anwendungen auszuführen, kannst du sie leicht verändern, mit anderen teilen und mehrfach ausführen. 

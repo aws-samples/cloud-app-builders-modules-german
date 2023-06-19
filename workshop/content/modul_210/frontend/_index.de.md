@@ -97,9 +97,10 @@ Der Zugriff auf das Frontend erfolgt über eine sog. **Cloudfront Distribution**
 7. Unter **Cache key and origin requests** wähle **Cache policy and orgin request policy** aus. Klicke bei **Cache Policy** auf `CachingDisabled`. Durch diese Einstellung werden deine Anfragen nicht gecached, sodass du immer die neueste Version deiner ToDo-Liste bekommst, wenn du die Seite aufrufst.
 7. Unter **Web Application Firewall (WAF)** die Options mit ``Do not enable security protections`` auswählen.
 8. Im Abschnitt **Settings**, bei **Default Root Object**, `index.html` eingeben.
-9. Nach unten scrollen und auf **Create Distribution** klicken.
+9. Nach unten scrollen und als **Description** ``Content delivery network für ToDo-Webseite`` eingeben.
+10. Klicke auf **Create Distribution**.
 10. Sobald die CloudFront Distribution erstellt wird, erscheint oben ein blauer Kasten mit dem Titel **S3 bucket policy needs to be updated**. Klicke auf **Copy policy**.
-11. Gehe zurück zu deinem erstellten Amazon S3 Bucket und unter dem Reiter Permissions findest du **Bucket policy**.
+11. Gehe zurück zu deinem erstellten Amazon S3 Bucket und unter dem Reiter **Permissions** findest du **Bucket policy**.
 12. Klicke auf **Edit** und kopiere die Policy hinein. Mit einem Klick auf **Save changes**, kann nun deine CloudFront distribution auf die Inhalte dieses Amazon S3 Buckets zurückgreifen.
 
 
