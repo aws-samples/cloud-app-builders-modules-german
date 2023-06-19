@@ -70,7 +70,7 @@ DynamoDB verwendet. Diese wird in den folgenden Schritten konfiguriert und berei
 1. Unter **Services** den Dienst **DynamoDB** auswählen.
 1. Unter **Dashboard**, auf **Create table** klicken.
 1. Bei **Table name** `ServerlessTodoTable` eingeben.
-1. Bei **Primary key** `user_id` eingeben und als Typ `String` nutzen. 
+1. Bei **Partition key** `user_id` eingeben und als Typ `String` nutzen. 
 1. Sicherstellen, dass **Add sort key** ausgewählt ist, dannach `id` eingeben und als Typ `String` nutzen.
 1. Wàhle **Customize settings**.
 1. Bei **Read/write capacity mode** `On-Demand` auswählen.
@@ -92,8 +92,9 @@ einzurichten sind die folgenden Schritte notwendig.
 
 Als nächstes kann der Sourcecode der Funktion hochgeladen werden.
 
-1. Im **[Repository HIER EINFÜGEN]()** die Javascript Datei unter `src/serverless-api/index.js` öffnen.
-1. Den Inhalt der Datei `index.js` in die Zwischenablage kopieren und damit den **gesamten** Code der Lambda Funktion im Browser ersetzen.
+1. Im GitHub Repository die Javascript Datei [src/serverless-api/index.js](https://github.com/aws-samples/cloud-app-builders-modules-german/blob/592bc3b50463f8de6c00d9effa9cc40e4c6833b6/src/serverless-api/index.js) öffnen.
+1. Den Inhalt der Datei `index.js` in die Zwischenablage kopieren.
+1. In dem Browser in dem deine Lambda Funktion offen ist, den **gesamten** Code mit dem Inhalt der `index.js` Datei ersetzen.
 1. Zum Abschluss auf **Deploy** klicken.
 
 Die Lambda Funktion nutzt Umgebungsvariablen, über die die Verbindungsparameter zur DynamoDB Datenbank ausgelesen werden. 
@@ -121,7 +122,7 @@ besitzt. In diesem Schritt wird ein API Gateway aufgesetzt und konfiguriert, dam
 1. Bei **API name** `TodoServerlessApi` eingeben.
 1. Auf **next** klicken.
 1. Die Default Route muss entfernt werden.
-1. Die folgenden neuen Route anlegen, und für jede `TodoServerlessFunction` als Integration Target auswählen:
+1. Die folgenden neuen Routen anlegen, und für jede `TodoServerlessFunction` als Integration Target auswählen:
    1. **GET** `/api/v2/todos` - Zugriff auf alle ToDos
    1. **POST**, `/api/v2/todos` - Ein neues ToDo erstellen
    1. **PUT**, `/api/v2/todos/{todo+}` - Update eines ToDo über die ToDo-ID
@@ -166,7 +167,7 @@ Nun kannst du definieren wie mit Serverless-API interagiert werden soll.
 1. Bei **Origin and origin groups**, das Origin von gerade auswählen.
 1. Im Abschnitt **Viewer**, bei **Viewer protocol policy** `HTTPS only` auswählen.
 1. Bei **Allowed HTTP Methods** `GET, HEAD, OPTIONS, PUT, POST, PATCH, DELETE` auswählen.
-7. Unter **Cache key and origin requests** wähle **Cache policy and orgin request policy** aus. Klicke bei **Cache Policy** auf `CachingDisabled`. Durch diese Einstellung werden deine Anfragen nicht gecachet, sodass du immer die neueste Version deiner Todo-Liste bekommst, wenn du die Seite aufrufts.
+7. Unter **Cache key and origin requests** wähle **Cache policy and orgin request policy** aus. Klicke bei **Cache Policy** auf `CachingDisabled`. Durch diese Einstellung werden deine Anfragen nicht gecached, sodass du immer die neueste Version deiner Todo-Liste bekommst, wenn du die Seite aufrufts.
 1. Auf **Create behavior** klicken.
 
 {{% notice note %}}

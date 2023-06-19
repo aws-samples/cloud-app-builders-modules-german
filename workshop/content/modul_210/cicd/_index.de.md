@@ -126,7 +126,7 @@ Die erste Ausführung von dem Build Prozess ist fehlgeschlagen. Das liegt daran,
                 "ecr:BatchCheckLayerAvailability",
                 "ecr:PutImage"
             ],
-            "Resource": "arn:aws:ecr:us-east-1 :<YOUR_AWS_ACCOUNT_ID>:repository/workshop-backend"
+            "Resource": "arn:aws:ecr:us-east-1:<YOUR_AWS_ACCOUNT_ID>:repository/workshop-backend"
         },
         {
             "Effect": "Allow",
@@ -137,9 +137,8 @@ Die erste Ausführung von dem Build Prozess ist fehlgeschlagen. Das liegt daran,
 }
 ```
 2. Im JSON Editor überschreibe **<YOUR_AWS_ACCOUNT_ID>** - mit der ID von deinem AWS-Account (im AWS Console **User-Menu** sichtbar) - z.b. `112233445566`
-3. **Next: Tags** klicken.
-4. **Next: Review** klicken.
-5. Gebe der Policy den Namen `CodeBuildECRAccess`.
+3. **Next** klicken.
+5. Gebe der Policy den **Namen** `CodeBuildECRAccess`.
 6. Erstelle die Policy mit **Create policy**
 7. Suche nach deiner neu erstellten **CodeBuildECRAccess** Policy und wähle die Policy in der Liste.
 8. Klicke auf **Actions** und als nächstes auf **Attach**.
