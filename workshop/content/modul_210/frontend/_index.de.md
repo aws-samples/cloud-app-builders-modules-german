@@ -142,7 +142,7 @@ Teste nun die Funktionalitäten deiner ToDo-Anwendung:
 
 ![Todos Daten](/images/todos_daten.png)
 
-<video width=100% controls autoplay loop>
+<video width=100% controls autoplay loop muted>
     <source src="/images/ToDoApp.mp4" type="video/mp4">
     Your browser does not support the video tag.  
 </video>

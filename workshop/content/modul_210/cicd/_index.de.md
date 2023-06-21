@@ -46,7 +46,7 @@ In den nächsten Schritten wirst du Stück für Stück deine CI/CD-Pipeline erst
 Bei AWS Academy stehen nicht alle Dienste und Funktionen in vollem Umfang zur Verfügung. In AWS Academy kannst du nicht AWS CodePipeline und AWS CodeBuild nutzen. Deshalb haben wir Videos, die zeigen wie CI/CD in AWS konfiguriert und ausgeführt wird, aufgezeichnet. Wenn du diesen Workshop in einem AWS Account, der nicht durch AWS Academy bereitgestellt wird folgst, dann kannst du der Anleitung folgen.
 {{% /notice%}}
 
-<video width=100% controls autoplay loop>
+<video width=100% controls>
     <source src="/images/AWS CodePipeline Creation.mp4" type="video/mp4">
     Your browser does not support the video tag.  
 </video>
@@ -152,7 +152,7 @@ Jetzt sollte der Build Prozess funktionieren.
 #### Veröffentlichung einer Änderung 
 In diesem Schritt wird eine Änderung im CodeCommit Repository vorgenommen. Dieser wird danach automatisch über die CI/CD Pipeline veröffentlicht.
 
-<video width=100% controls autoplay loop>
+<video width=100% controls>
     <source src="/images/AWS CodePipeline Demo.mp4" type="video/mp4">
     Your browser does not support the video tag.  
 </video>
