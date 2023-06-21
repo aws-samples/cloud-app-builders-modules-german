@@ -49,7 +49,7 @@ Die Struktur dieser Textdatei enthält Abschnitte, die verpflichtend sind und we
 #### Erstellung der Netzwerkressourcen
 Die Ressourcen sind ein verpflichtender Teil der CloudFormation Vorlage und bestehen mindestens aus zwei Teilen: Type und Properties. Der Typ (Type) gibt an, welcher Art von Ressource erstellt werden soll und die Eigenschaften (Properties) spezifizieren die Ressource näher. 
 
-Im Kapitel Netzwerk hast du eine VPC und verschiedene Subnetze erstellt. Diese werden nun durch die Vorlage **network_public_subnets_only.yaml**, welche im Ordner **src/cloudformation** zu finden ist, definiert. 
+Im Kapitel Netzwerk hast du eine VPC und verschiedene Subnetze erstellt. Diese werden nun durch die Vorlage **trainingCF_network.yaml**, welche im Ordner **src/cloudformation** zu finden ist, definiert. 
 
 **Aufgabe:**
 Gehe die Vorlage durch und prüfe, ob du Stück für Stück nachvollziehen kannst, wie `SubnetPublicA`, `SubnetPublicB` und das Internet-Gateway definiert sind.
@@ -104,17 +104,22 @@ So sollte deine Security Group aussehen:
         RDSMySQLDBSecurityGroup:
           Type: AWS::EC2::SecurityGroup
           Properties:
-            GroupDescription: Access to DB connection
-            `SecurityGroupIngress:`
-              `- CidrIp: 172.100.0.0/16`
-                Description: Allow cdDB Access from Container Instances
-                `IpProtocol: tcp`
-                `FromPort: 3306`
-                `ToPort: 3306`
+            GroupDescription: RDS SG group
             Tags:
               - Key: Name
                 Value: Workshop-RDS-SG
             VpcId: !ImportValue VPC
+            SecurityGroupEgress:
+            - IpProtocol: tcp
+              FromPort: 3306
+              ToPort: 3306
+              CidrIp: 0.0.0.0/0
+            SecurityGroupIngress:
+            - CidrIp: 172.100.0.0/16
+              Description: Allow DB Access from Container Instances
+              IpProtocol: tcp
+              FromPort: 3306
+              ToPort: 3306
         </code>
     </pre>
 </div>
@@ -127,12 +132,12 @@ Im Folgenden wirst du eine CloudFormation Vorlage ausführen. Da manche Teile de
 
 1. Unter Services den Dienst **S3** auswählen.
 1. Klicke auf **Create bucket**, um einen neuen Bucket zu erstellen.
-1. Gebe deinem Bucket einen weltweit einzigartigen Namen, der mit ``cloudformation`` beginnen soll.
+1. Gebe deinem Bucket einen weltweit einzigartigen Namen, der mit ``cloudformation`` beginnen soll, zum Beispiel ``cloudformation-{yourname}``
 1. Klicke auf **Create bucket**.
 1. Kopiere den Namen des Buckets. Diesen wirst du im nächsten Schritt benötigen.
 1. Öffne deinen Bucket und erstelle einen Ordner mit dem Namen ``Vorlage``.
 1. Öffne in einem neuen Tab den Dienst **Cloud9** und öffne dort wieder deine Umgebung **Uek Umgebung**.
-1. Gehe in den Ordner **cloudformation/assets** durch ``cd cloud-app-builders-modules-german/src/cloudformation/assets``.
+1. Gehe in den Ordner **cloudformation/assets** durch ``cd ~/environment/cloud-app-builders-modules-german/src/cloudformation/assets``.
 1. Kopiere nun alle Dateien aus diesem Ordner in deinen Bucket. Ersetze DEIN_BUCKET durch den Namen deines erstellten Buckets. Sync wird genutzt, damit alle Dateien auf diesem Ordner kopiert werden.
 
 ```
@@ -145,17 +150,16 @@ aws s3 sync . s3://DEIN_BUCKET
 ```
 aws s3 cp cloudFormationToDo.yml s3://DEIN_BUCKET/Vorlage/
 ```
-3. Öffne in einem neuen Tab deinen S3 Bucket und prüfe, ob im Ordner Vorlage die yml-Datei kopiert wurde.
 
 #### Ausführung der Vorlage
 1. Wähle unter Services den Dienst **S3** und gehe zu deinem Bucket in den Ordner **Vorlage**.
 1. Dort sollte nun die kopierte Vorlage sein. Wähle diese aus und klick auf **Copy URL**.
 1. Unter Services den Dienst **CloudFormation** auswählen.
 1. Klicke auf **Create stack** und wähle **with new resources (standard)** aus.
-1. Lege deine Vorlage fest, indem du **Amazon S3 URL** auswählst. Gib nun die kopiere URL ein und klicke auf **Next**.
+1. Lege deine Vorlage fest, indem du **Amazon S3 URL** auswählst. Gib nun die kopierte URL ein und klicke auf **Next**.
 1. Benenne den Stack `ToDoStack`.
 1. Fülle die Parameter wie folgt aus (siehe das nächste Bild):
-    1. Für **URIbackend** füge die URI von deinem Container Image in Amazon ECR aus dem **[Amazon ECS](https://docs.aws.amazon.com/de_de/AmazonECS/latest/developerguide/Welcome.html)** integriert werden, der bisher [Container Image Kapitel]({{< ref "/modul_210/container" >}} "Container Image Kapitel") ein. Unter Services den Dienst **Elastic Container Registry** in einem neuen Browser Fenster öffnen. In der Liste der Private Repositories auf das repository mit dem Namen workshop-backend klicken. In der Liste der Images auf **Copy URI** klicken, um die URI vom backend container image zu kopieren und dann in dem anderen Browser Fenster mit den CloudFormation Parametern einfügen.
+    1. Für **URIbackend** füge die URI von deinem Container Image in Amazon ECR aus dem **[Amazon ECS](https://docs.aws.amazon.com/de_de/AmazonECS/latest/developerguide/Welcome.html)** integriert werden, der bisher [Container Image Kapitel]({{< ref "/modul_210/container" >}} "Container Image Kapitel") ein. Unter Services den Dienst **Elastic Container Registry** in einem neuen Browser Fenster öffnen. In der Liste der Private Repositories auf das repository mit dem Namen `workshop-backend` klicken. In der Liste der Images auf **Copy URI** klicken, um die URI vom backend container image zu kopieren und dann in dem anderen Browser Fenster mit den CloudFormation Parametern einfügen.
     2. Tippe in das Textfeld vom Parameter **pwDatabase** ein Passwort für die Datenbank, zum Beispiel ``todopassword``.
     3. Füge den Namen des Amazon S3-Buckets ein, den du zuvor erstellt hast, um die benötigten Dateien für CloudFormation bereitzustellen für **s3AssetBucketName**.
     4. In **userDatabase** gebe ``clusteradmin`` ein. Klicke auf **Next**.
@@ -197,11 +201,19 @@ Wenn du die serverlose Infrastruktur auch nutzen willst, kannst du diese wieder 
 #### Clean up
 Nun hast du die Vorlage der Infrastruktur für deine ToDo-App erfolgreich ausgeführt. Da nicht alle Ressourcen und Anwendungen in der Cloud dauerhaft gebraucht werden, lässt sich auch diese Infrastruktur leicht deprovisionieren.
 1. Unter Services den Dienst **CloudFormation** auswählen.
-2. Wähle deinen ToDo-App Stack aus. 
+2. Wähle deinen `ToDoStack` Stack aus. 
 3. Klicke oben rechts auf **Delete**. 
 4. Bestätige, dass du den Stack löschen möchtest.
 
 Nun wird deine ToDo-App wieder gelöscht. 
+
+Lösche zudem den S3 Bucket, in dem die CloudFormation Vorlage gespeichert ist.
+1. Unter Services den Dienst **S3** auswählen.
+2. In der Buckets Liste nach dem Namen `cloudformation-{yourname}` von deinem S3 Bucket suchen.
+3. Wähle deinen S3 Bucket in der Liste aus und klicke auf **Empty**.
+4. Gebe `permanently delete` in das Textfeld ein und klicke **Empty**. Dadurch werden all Objekte in dem Bucket gelöscht.
+5. Wähle deinen S3 Bucket in der Liste erneut aus und klicke auf **Delete**.
+6. Gebe den Namen von deinem S3 Bucket in das Textfeld und klicke auf **Delete bucket**. Nun wurde der S3 Bucket gelöscht.
 
 ### Zusammenfassung und nächste Schritte
 Herzlichen Glückwunsch! Du hast erfolgreich deine ToDo-App als Infrastuktur-as-Code aufgesetzt und ausgeführt. Durch diese Art ganze Anwendungen auszuführen, kannst du sie leicht verändern, mit anderen teilen und mehrfach ausführen. 

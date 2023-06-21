@@ -85,14 +85,14 @@ einzurichten sind die folgenden Schritte notwendig.
 1. Auf **Create function** klicken.
 1. Sicherstellen, dass **Author from scratch** ausgewählt ist. 
 1. Bei **Function name** `TodoServerlessApi` eingeben.
-1. Bei **Runtime** `Node.js 18.x` auswählen. Das ist die Javascript Laufzeitumgebung für das API. 
+1. Bei **Runtime** `Node.js 18.x` auswählen. Das ist die Javascript Laufzeit für das API. 
 1. Im Abschnitt **Change default execution role** `Use an existing role` auswählen.
 1. Bei **Role name** `LabRole` auswählen.
 1. Auf **Create function** klicken.
 
 Als nächstes kann der Sourcecode der Funktion hochgeladen werden.
 
-1. Im Repository **[cloud-app-builders-module-german](https://github.com/aws-samples/cloud-app-builders-modules-german)** die Javascript Datei unter `src/serverless-api/index.js` öffnen.
+1. Im **[Repository HIER EINFÜGEN]()** die Javascript Datei unter `src/serverless-api/index.js` öffnen.
 1. Den Inhalt der Datei `index.js` in die Zwischenablage kopieren und damit den **gesamten** Code der Lambda Funktion im Browser ersetzen.
 1. Zum Abschluss auf **Deploy** klicken.
 
@@ -116,11 +116,11 @@ besitzt. In diesem Schritt wird ein API Gateway aufgesetzt und konfiguriert, dam
 1. Im Abschnitt **HTTP API** auf **Build** klicken.
 1. Im Abschnitt **Integrations**, auf **Add integration** klicken.
 1. In der Liste **Lambda** auswählen.
-1. Bei **Lambda function**, die vorher erstellte Funktion `TodoServerlessApi` auswählen. 
+1. Bei **Lambda function**, die vorher erstellte Funktion `TodoServerlessFunction` auswählen. 
 1. Rechts davon die `Version 1.0` auswählen.
 1. Bei **API name** `TodoServerlessApi` eingeben.
-1. Auf **Next** klicken.
-1. Die Default Route muss entfernt werden. Klicke hierzu auf **Remove**.
+1. Auf **next** klicken.
+1. Die Default Route muss entfernt werden.
 1. Die folgenden neuen Route anlegen, und für jede `TodoServerlessAPI` als Integration Target auswählen:
    1. **GET** `/api/v2/todos` - Zugriff auf alle ToDos
    1. **POST**, `/api/v2/todos` - Ein neues ToDo erstellen
@@ -166,7 +166,7 @@ Nun kannst du definieren wie mit Serverless-API interagiert werden soll.
 1. Bei **Origin and origin groups**, das Origin von gerade auswählen.
 1. Im Abschnitt **Viewer**, bei **Viewer protocol policy** `HTTPS only` auswählen.
 1. Bei **Allowed HTTP Methods** `GET, HEAD, OPTIONS, PUT, POST, PATCH, DELETE` auswählen.
-7. Unter **Cache key and origin requests** wähle **Cache policy and orgin request policy** aus. Klicke bei **Cache Policy** auf `CachingDisabled`. Durch diese Einstellung werden deine Anfragen nicht gecachet, sodass du immer die neueste Version deiner Todo-Liste bekommst, wenn du die Seite aufrufts.
+7. Unter **Cache key and origin requests** wähle **Cache policy and orgin request policy** aus. Klicke bei **Cache Policy** auf `CachingDisabled`. Durch diese Einstellung werden deine Anfragen nicht gecached, sodass du immer die neueste Version deiner Todo-Liste bekommst, wenn du die Seite aufrufts.
 1. Auf **Create behavior** klicken.
 
 {{% notice note %}}

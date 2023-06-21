@@ -169,7 +169,7 @@ In den folgenden Schritten wirst du ein Container Cluster erstellen. Das Cluster
 #### Erstellen des Container Clusters
 
 **Aufgabe:**
-Erstelle ein Container Cluster in Amazon Elastic Container Service (Amazon ECS) und benenne es ``workshop-cluster``. Nutze als Template Networking only und wähle Enable Container Insights aus, um mehr Einblicke später in das Cluster zu bekommen.
+Erstelle ein Container Cluster in Amazon Elastic Container Service (Amazon ECS) und benenne es ``workshop-cluster``. Nutze als Template Networking only und wähle Use Container Insights aus, um mehr Einblicke später in das Cluster zu bekommen.
 
 {{%expand "Hinweis" %}}
 In der **[Dokumentation](https://docs.aws.amazon.com/de_de/AmazonECS/latest/developerguide/create_cluster.html  )** sind die einzelnen Schritte zur Erstellung eines Cluster beschrieben.
@@ -180,7 +180,7 @@ In der **[Dokumentation](https://docs.aws.amazon.com/de_de/AmazonECS/latest/deve
 1. Im Bereich Amazon ECS -  auf **Clusters** danach auf **Create Cluster** klicken.
 1. Als **Cluster name** ``workshop-cluster`` eingeben.
 1. Unter Networking **workshop-VPC** auswählen und die Subnetze **Workshop-PublicA** und **Workshop-PublicB**.
-1. Bei CloudWatch Container Insights die Option **Enable Container Insights** auswählen.
+1. Unter Monitoring **Use Container Insights** aktivieren.
 1. Klick auf **Create**.
 1. Klick auf **View Cluster**.
 {{% /expand%}}
@@ -193,13 +193,14 @@ Beim ersten Versuch ein Amazon ECS Cluster zu erstellen kann es ggf. zu einer Fe
 
 #### Erstellen der Task Definition 
 
-{{% includereplace "ecs_task_definition.de.md" "servicename" "backend" %}}
+{{% includereplace "ecs_task_definition.de.md" "servicename:backend" %}}
 
 {{% include "ecs_backend_env_setup.de.md" %}}
 
 #### Service Konfiguration Backend Container
 
-{{% include "ecs_cluster_backend_service.de.md" %}}
+{{% includereplace "ecs_cluster_service.de.md" "servicename:backend" "security-group-name:Workshop-ECS-Backend-SG" %}}
+
 
 ### Zusammenfassung und nächste Schritte 
 Herzlichen Glückwunsch! Du hast erfolgreich das Backend für deine Anwendung durch Amazon ECS implementiert und dadurch hochverfügbar gemacht. Nun können zwei Container im Hintergrund laufen, um die Anwendung zu unterstützen. Diese sind durch den Load Balancer auf zwei Availability Zones verteilt. Im nächsten Schritt wird nun das Frontend aufgesetzt. Das Frontend wird dann über den Load Balancer auf das Backend zugreifen und das Backend API auf die ToDos in der Datenbank zugreifen.

@@ -51,7 +51,7 @@ wird im nächsten Schritt ein manuelles Backup erstellt, welches dann für die W
 
 #### Point in time Backup erstellen
 
-1. Zunächst einmal musst du in deiner Todo-Liste ein paar Einträge erstellen. Erinnerst du dich noch wie du deine Todo-Applikation öffnen kannst? Im Abschnitt [Test der Beispielanwendung]({{< ref "/modul_109/ha_skalierbarkeit#test-der-beispielanwendung" >}} "Test der Beispielanwendung") wurde beschrieben wie du die URL für deine Applikation findest. Schreibe zum Beispiel **5 ToDos** in deine Liste.
+1. Zunächst einmal musst du in deiner Todo-Liste ein paar Einträge erstellen. Erinnerst du dich noch wie du deine Todo-Applikation öffnen kannst? Im Abschnitt [Test der Beispielanwendung]({{< ref "/modul_109/todo_app_implementation#test-der-todo-liste" >}} "Test der Beispielanwendung") wurde beschrieben wie du die URL für deine Applikation findest. Schreibe zum Beispiel **5 ToDos** in deine Liste.
 2. Danach unter **Services** den Dienst **RDS** auswählen.
 3. Links im Menü auf **Databases** klicken.
 4. Die Datenbank ``workshop-db`` auswählen und über **Actions** auf **Take snapshot** klicken.

@@ -2,7 +2,7 @@
 2. Im Bereich Amazon ECS -  auf **Clusters** danach auf **Create Cluster** klicken.
 3. Im ersten Schritt als Template **Networking only** auswählen und **Next step** klicken.
 4. Als **Cluster name** ``workshop-cluster`` eingeben.
-5. Bei CloudWatch Container Insights die Option **Enable Container Insights** auswählen.
+1. Unter Monitoring **Use Container Insights** aktivieren.
 6. Klick auf **Create**.
 
 <!-- Fix this with shortcodes -->

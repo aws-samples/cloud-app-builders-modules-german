@@ -22,7 +22,7 @@ Folgende Themen werden in diesem Modul anhand der ToDo-Applikation behandelt:
 * [3. Datenbank](modul_109/datenbank.html) - Erstellung einer relationalen Datenbank
 * [4. Container Image](modul_109/container.html) - Vorbereitung und Publikation der Container Images
 * [5. Container Plattform](modul_109/ecs_cluster.html) - Vorbereitung der Container Plattform und Deployment der Beispielanwendung
-* [6. ToDo-App Implementierung](modul_109/ha_skalierbarkeit.html) - Multi-AZ Deployment und Skalierung der Beispielanwendung
+* [6. ToDo-App Implementierung](modul_109/todo_app_implementation.html) - Multi-AZ Deployment und Skalierung der Beispielanwendung
 * [7. Monitoring, Logging & Alarme](modul_109/monitoring_logging.html) - Überwachung der Beispielanwendung und Datenbank
 * [8. Backup & Recovery](modul_109/backup.html) - Implementation von Backup & Recovery für die Datenbank
 * [9. Zusammenfassung](modul_109/zusammenfassung.html) - Zusammenfassung
