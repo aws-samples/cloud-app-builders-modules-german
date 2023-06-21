@@ -70,11 +70,11 @@ DynamoDB verwendet. Diese wird in den folgenden Schritten konfiguriert und berei
 1. Unter **Services** den Dienst **DynamoDB** auswählen.
 1. Unter **Dashboard**, auf **Create table** klicken.
 1. Bei **Table name** `ServerlessTodoTable` eingeben.
-1. Bei **Primary key** `user_id` eingeben und als Typ `String` nutzen. 
-1. Sicherstellen, dass **Add sort key** ausgewählt ist, dannach `id` eingeben und als Typ `String` nutzen.
-1. Wàhle **Customize settings**.
-1. Bei **Read/write capacity mode** `On-Demand` auswählen.
-1. Die restlichen Einstllungen bleiben unverändert. Zum Abschluss auf **Create** klicken.
+1. Bei **Partition key** `user_id` eingeben und als Typ `String` nutzen. 
+1. Bei **Sort key - optional** `id` eingeben und als Typ `String` nutzen.
+1. Unter **Table settings** wähle **Customize settings**.
+1. Bei **Capacity mode** `On-demand` auswählen.
+1. Die restlichen Einstellungen bleiben unverändert. Zum Abschluss auf **Create table** klicken.
 
 
 #### Bereitstellung der Backend Logik
@@ -116,7 +116,7 @@ besitzt. In diesem Schritt wird ein API Gateway aufgesetzt und konfiguriert, dam
 1. Im Abschnitt **HTTP API** auf **Build** klicken.
 1. Im Abschnitt **Integrations**, auf **Add integration** klicken.
 1. In der Liste **Lambda** auswählen.
-1. Bei **Lambda function**, die vorher erstellte Funktion `TodoServerlessApi` auswählen. 
+1. Bei **Lambda function**, die vorher erstellte Funktion `TodoServerlessFunction` auswählen. 
 1. Rechts davon die `Version 1.0` auswählen.
 1. Bei **API name** `TodoServerlessApi` eingeben.
 1. Auf **next** klicken.
@@ -127,7 +127,7 @@ besitzt. In diesem Schritt wird ein API Gateway aufgesetzt und konfiguriert, dam
    1. **PUT**, `/api/v2/todos/{todo+}` - Update eines ToDo über die ToDo-ID
    1. **DELETE**, `/api/v2/todos/{todo+}` - Löschen eines ToDo über die ToDo-ID
 1. Zwei Mal auf **Next** klicken.
-1. Auf **Create klicken**.
+1. Auf **Create** klicken.
 
 Nach der Bereitstellung ist das API Gateway über eine **Invoke URL** erreichbar. Schreib dir diese am besten auf. Sie sieht 
 ähnlich aus wie `https://abcdef.execute-api.eu-central-1.amazonaws.com`.
@@ -166,7 +166,7 @@ Nun kannst du definieren wie mit Serverless-API interagiert werden soll.
 1. Bei **Origin and origin groups**, das Origin von gerade auswählen.
 1. Im Abschnitt **Viewer**, bei **Viewer protocol policy** `HTTPS only` auswählen.
 1. Bei **Allowed HTTP Methods** `GET, HEAD, OPTIONS, PUT, POST, PATCH, DELETE` auswählen.
-7. Unter **Cache key and origin requests** wähle **Cache policy and orgin request policy** aus. Klicke bei **Cache Policy** auf `CachingDisabled`. Durch diese Einstellung werden deine Anfragen nicht gecachet, sodass du immer die neueste Version deiner Todo-Liste bekommst, wenn du die Seite aufrufts.
+7. Unter **Cache key and origin requests** wähle **Cache policy and orgin request policy** aus. Klicke bei **Cache Policy** auf `CachingDisabled`. Durch diese Einstellung werden deine Anfragen nicht gecached, sodass du immer die neueste Version deiner Todo-Liste bekommst, wenn du die Seite aufrufts.
 1. Auf **Create behavior** klicken.
 
 {{% notice note %}}
