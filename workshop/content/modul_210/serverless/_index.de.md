@@ -85,14 +85,14 @@ einzurichten sind die folgenden Schritte notwendig.
 1. Auf **Create function** klicken.
 1. Sicherstellen, dass **Author from scratch** ausgewählt ist. 
 1. Bei **Function name** `TodoServerlessApi` eingeben.
-1. Bei **Runtime** `Node.js 18.x` auswählen. Das ist die Javascript Laufzeit für das API. 
+1. Bei **Runtime** `Node.js 18.x` auswählen. Das ist die Javascript Laufzeitumgebung für das API. 
 1. Im Abschnitt **Change default execution role** `Use an existing role` auswählen.
 1. Bei **Role name** `LabRole` auswählen.
 1. Auf **Create function** klicken.
 
 Als nächstes kann der Sourcecode der Funktion hochgeladen werden.
 
-1. Im **[Repository HIER EINFÜGEN]()** die Javascript Datei unter `src/serverless-api/index.js` öffnen.
+1. Im GitHub Repository die Javascript Datei [src/serverless-api/index.js](https://github.com/aws-samples/cloud-app-builders-modules-german/blob/592bc3b50463f8de6c00d9effa9cc40e4c6833b6/src/serverless-api/index.js) öffnen.
 1. Den Inhalt der Datei `index.js` in die Zwischenablage kopieren und damit den **gesamten** Code der Lambda Funktion im Browser ersetzen.
 1. Zum Abschluss auf **Deploy** klicken.
 
@@ -119,8 +119,8 @@ besitzt. In diesem Schritt wird ein API Gateway aufgesetzt und konfiguriert, dam
 1. Bei **Lambda function**, die vorher erstellte Funktion `TodoServerlessFunction` auswählen. 
 1. Rechts davon die `Version 1.0` auswählen.
 1. Bei **API name** `TodoServerlessApi` eingeben.
-1. Auf **next** klicken.
-1. Die Default Route muss entfernt werden.
+1. Auf **Next** klicken.
+1. Die Default Route muss entfernt werden. Klicke hierzu auf **Remove**.
 1. Die folgenden neuen Route anlegen, und für jede `TodoServerlessAPI` als Integration Target auswählen:
    1. **GET** `/api/v2/todos` - Zugriff auf alle ToDos
    1. **POST**, `/api/v2/todos` - Ein neues ToDo erstellen
@@ -128,6 +128,7 @@ besitzt. In diesem Schritt wird ein API Gateway aufgesetzt und konfiguriert, dam
    1. **DELETE**, `/api/v2/todos/{todo+}` - Löschen eines ToDo über die ToDo-ID
 1. Zwei Mal auf **Next** klicken.
 1. Auf **Create** klicken.
+
 
 Nach der Bereitstellung ist das API Gateway über eine **Invoke URL** erreichbar. Schreib dir diese am besten auf. Sie sieht 
 ähnlich aus wie `https://abcdef.execute-api.eu-central-1.amazonaws.com`.
