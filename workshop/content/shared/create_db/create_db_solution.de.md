@@ -4,11 +4,12 @@
 3. Klick auf **Create database**.
 4. Unter **Choose a database creation method** die Option auf **Standard create** belassen.
 5. Unter **Engine options** als Engine type **MySQL** auswählen.
-6. Bei **Version** die Engine **MySQL 8.0.28** auswählen.
+6. Bei **Version** die Engine **MySQL 8.0.35** auswählen.
 7. In der Sektion **Templates** die Option **Dev/Test** auswählen.
 8. Unter **Availability and durability** die Option ``Multi-AZ DB instance`` auswählen.
 8. Im Bereich Settings unter **DB instance identifier** den Namen ``workshop-db`` eingeben.
 9. Als **Master username** wird ``clusteradmin`` verwendet.
+10. Unter **Credential management** ``self managed``auswählen.
 10. Das **Master password** ist ``todopassword``. Das Password nochmals unter **Confirm password** wiederholen.
 11. Unter **DB instance class** auf **Burstable classes (includes t classes)** wechseln und dort den Typ **db.t3.micro** auswählen.
 12. Unter **Storage** den **Storage type** **General Purpose SSD (gp2)** und **allocated storage** ``100GiB``auswählen.

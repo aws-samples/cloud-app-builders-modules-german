@@ -3,16 +3,10 @@
 ```
 
 6. Unter Port mappings den Port **5000** angeben.
-7. Im Abschnitt Environment Variables die folgenden Umgebungsvariablen (case sensitive) eingeben:
+7. Im Abschnitt **Environment Variables** die folgenden Umgebungsvariablen (case sensitive) eingeben. Der DNS Endpunkt der DB Instanz sollte eine ähnliche Struktur haben wie dieser Endpunkt: ``workshop-db.xxxxxxxxx.us-east-1.rds.amazonaws.com``. Diesen findest du bei deiner bereits erstellten RDS Datenbank.
     - **Key:** ``DB_USER`` | **Value:** ``clusteradmin``
     - **Key:** ``DB_PASSWORD`` | **Value:** ``todopassword``
     - **Key:** ``DB_HOST`` | **Value:** ``DNS Endpunkt der DB Instanz``
-8. Auf **Next** klicken.
-9. Bei Environment **AWS Fargate** wählen und als Operating system **Linux/X86_64**.
-10. Bei Task memory (GB) **0.5GB** auswählen.
-11. Für Task CPU (vCPU) **0.25vCPU** auswählen.
-12. Als Task Role **None** auswählen.
-13. Bei Task Execution Role **LabRole** eingeben.
 14.  Die restlichen Optionen bleiben unverändert. Am Ende der Seite auf **Create** und danach **View task definition** klicken.
 
 {{% notice note %}}

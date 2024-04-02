@@ -189,7 +189,7 @@ In der **[Dokumentation](https://docs.aws.amazon.com/de_de/AmazonECS/latest/deve
 1. Unter Services den Dienst **Elastic Container Service** auswählen.
 1. Im Bereich Amazon ECS -  auf **Clusters** danach auf **Create Cluster** klicken.
 1. Als **Cluster name** ``workshop-cluster`` eingeben.
-1. Unter Networking **workshop-VPC** auswählen und die Subnetze **Workshop-PublicA** und **Workshop-PublicB**.
+1. Unter Infrastructure **AWS Fargate (serverless)** auswählen.
 1. Unter Monitoring **Use Container Insights** aktivieren.
 1. Klick auf **Create**.
 1. Klick auf **View Cluster**.
@@ -223,6 +223,7 @@ Beim ersten Versuch den Amazon ECS Cluster zu erstellen kann es ggf. zu einer Fe
 2. In der Übersicht die ``workshop-frontend`` Task Definition auswählen.
 3. Unter **Deploy** auf **Run Task** klicken.
 4. Als Cluster **workshop-cluster** auswählen.
+1. Unter Compute options **Launch Type** auswählen. Der Launch type sollte auf **FARGATE** gesetzt sein.
 5. Unter Networking das **Workshop-VPC** auswählen.
 6. Als Subnet das **Workshop-PublicA** auswählen.
 7. Bei Security groups **Workshop-ECS-Task-SG** auswählen.

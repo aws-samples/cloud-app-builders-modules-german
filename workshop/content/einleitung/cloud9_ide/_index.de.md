@@ -23,8 +23,9 @@ Das Erstellen einer AWS Cloud9 Instanz ist sehr einfach. Voraussetzung ist der Z
 2. Unter **Services** den Dienst **Cloud9** auswählen.
 3. Klick auf **Create environment** startet die Erstellung einer neuen Umgebung.
 4. Als Name für die Umgebung `ÜK Umgebung` eingeben.
-5. Die vorgegebenen Werte beibehalten und unter Connection **Secure Shell (SSH)** auswählen.
-6. Klick auf **Create**, um die Erstellung zu starten.
+5. Unter **New Instance** `t3.small` auswählen.
+6. Die vorgegebenen Werte beibehalten und unter Connection **Secure Shell (SSH)** auswählen.
+7. Klick auf **Create**, um die Erstellung zu starten.
 
 {{% notice note %}}
 In der Standardeinstellung wird die AWS Cloud9 Instanz automatisch nach 30 Minuten gestoppt, um Kosten zu sparen. 

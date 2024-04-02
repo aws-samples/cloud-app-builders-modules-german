@@ -44,21 +44,23 @@ ___
 
 1. Unter **Services** den Dienst **EC2** auswählen.
 2. Links unter **Load Balancing** auf **Load Balancers** klicken und den ``todoApp`` Load Balancer anklicken.
-3. In dem **Listeners** tab die Box für die bestehende Listener Regel in der List auswählen.
-4. Über das **Actions** Menü **Manage rules** auswählen.
-5. Mit einem Klick auf das Stift-Symbol oben in den Editiermodus wechseln.
-6. Weiterer Klick auf das Stift-Symbol bei der Regel links neben **last** klicken.
-7. Klick auf das Stift-Symbol im Abschnitt **Forward to** unter **THEN**.
-8. Als **Target group** nun das ``workshop-frontend`` auswählen und die Änderung mit Klick auf den Hacken bestätigen.
-9. Klick auf **Update** um die bestehende Regel zu aktualisieren.
-10. Nun eine weitere Regel über das **+** Symbol und danach auf **+ Insert Rule** hinzufügen.
-11. Unter **IF** auf **+Add condition** klicken und dort als Option **Path** auswählen und als Wert ``/api/*`` eingeben
-12. Rechts im Abschnitt **THEN** auf **+ Add action** klicken **Forward to...** auswählen und als **Target Group** ``workshop-backend`` auswählen.
-13. Die Änderungen über einen Klick auf **Save** bestätigen.
-14. Über einen Klick auf **<** Zurück in die Übersicht des Load Balancers wechseln.
+3. In dem **Listeners and rules** tab die Box für die bestehende Listener Regel in der List auswählen.
+1. Unter Manage rules **Edit rules** klicken.
+1. Wähle die **Default** Regel aus und unter Actions klicke **edit rule**.
+1. Ändere die **Target group** zu ``workshop-frontend``.
+13. Die Änderungen über einen Klick auf **Save changes** bestätigen.
 
-Das Routing sollte nun wie folgt aussehen:
-![Loadbalancer Routing](/images/lb_routing.png)
+Nun fügen wir eine weitere Regel hinzu, um den Verkehr zum Backend zu leiten.
+1. Klicke auf **Add rule**.
+2. Nehme als **Name** ``backend-routing`` und klicke auf **Next**.
+3. Füge eine Kondition durch **Add condition** hinzu:
+    1. Wähle **Path** aus.
+    2. Der Pfad soll ``/api/*`` sein.
+    3. Bestätige durch **confirm** und klicke auf **Next**.
+4. Als **Target group** nun das ``workshop-backend`` auswählen.
+5. Die Priorität auf **1** setzen für die Regel **backend-routing**.
+6. Klicke auf **Next**.
+7. Bestätige durch einen Klick auf **Create**.
 
 {{% notice note %}}
 Mit dieser Konfiguration leitet der Load Balancer nun alle Anfragen an die Target Group ``workshop-frontend`` weiter. Hier läuft später der Frontend Container Service. Beim Einfügen, ändern oder Löschen von Einträgen in der Beispielanwendung werden die Anfragen über den Pfad ``/api/`` an den Backend Container weitergeleitet. Dieser wiederum leitet die Daten an die Amazon RDS Datenbank weiter.

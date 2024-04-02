@@ -1,7 +1,7 @@
 1. Unter Services den Dienst **Elastic Container Service** auswählen.
 2. Im Bereich Amazon ECS -  auf **Clusters** danach auf **Create Cluster** klicken.
-3. Im ersten Schritt als Template **Networking only** auswählen und **Next step** klicken.
 4. Als **Cluster name** ``workshop-cluster`` eingeben.
+1. Unter Infrastructure **AWS Fartgate (serverless)** auswählen.
 1. Unter Monitoring **Use Container Insights** aktivieren.
 6. Klick auf **Create**.
 
